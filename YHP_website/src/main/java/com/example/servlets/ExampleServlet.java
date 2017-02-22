@@ -1,11 +1,19 @@
 package com.example.servlets;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 /**
  * Servlet implementation class ExampleServlet
@@ -28,6 +36,28 @@ public class ExampleServlet extends HttpServlet {
 	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		try
+		{
+			Context init = new InitialContext();
+			Context env = (Context) init.lookup("java:comp/env");
+			DataSource ds = (DataSource) env.lookup("jdbc/test");
+			Connection con = ds.getConnection();
+			Statement stat = con.createStatement();
+			ResultSet rs = stat.executeQuery("select * from users");
+			while (rs.next())
+			{
+				System.out.println(rs.getString(2));
+			}
+			con.close();
+		} catch (NamingException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static String test()

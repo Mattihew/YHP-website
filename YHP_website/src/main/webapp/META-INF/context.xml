@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+<Resource name="jdbc/test"
+auth="Container"
+type="javax.sql.DataSource"
+username="root"
+password="SQLP"
+driverClassName="com.mysql.jdbc.Driver"
+url="jdbc:mysql://localhost:3306/test?autoReconnect=true&amp;useSSL=false"
+maxActive="15"
+maxIdle="3"/>
+</Context>
