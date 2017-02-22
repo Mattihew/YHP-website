@@ -1,0 +1,6 @@
+language: java
+jdk:
+  - oraclejdk8
+script: mvn test -f YHP_website/pom.xml
+notifications:
+  email: false
