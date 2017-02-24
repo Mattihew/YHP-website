@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
-<Resource name="jdbc/test"
+<Resource name="jdbc/postgres"
 auth="Container"
 type="javax.sql.DataSource"
-username="root"
-password="SQLP"
-driverClassName="com.mysql.jdbc.Driver"
-url="jdbc:mysql://localhost:3306/test?autoReconnect=true&amp;useSSL=false"
+username="testUser"
+password="testPassword"
+driverClassName="org.postgresql.Driver"
+url="jdbc:postgresql://127.0.0.1:5432/postgres?autoReconnect=true&amp;useSSL=false"
 maxActive="15"
 maxIdle="3"/>
 </Context>
