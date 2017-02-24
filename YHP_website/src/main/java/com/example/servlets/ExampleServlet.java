@@ -39,14 +39,13 @@ public class ExampleServlet extends HttpServlet {
 		try
 		{
 			Context init = new InitialContext();
-			Context env = (Context) init.lookup("java:comp/env");
-			DataSource ds = (DataSource) env.lookup("jdbc/test");
+			DataSource ds = (DataSource) init.lookup("java:/comp/env/jdbc/postgres");
 			Connection con = ds.getConnection();
 			Statement stat = con.createStatement();
-			ResultSet rs = stat.executeQuery("select * from users");
+			ResultSet rs = stat.executeQuery("select * from test");
 			while (rs.next())
 			{
-				System.out.println(rs.getString(2));
+				System.out.println(rs.getInt(2));
 			}
 			con.close();
 		} catch (NamingException e)
