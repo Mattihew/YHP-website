@@ -4,4 +4,20 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>ExampleServlet</servlet-name>
+  	<display-name>ExampleServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.example.servlets.ExampleServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ExampleServlet</servlet-name>
+  	<url-pattern>/ExampleServlet</url-pattern>
+  </servlet-mapping>
+  <resource-ref>
+  	<res-ref-name>jdbc/postgres</res-ref-name>
+  	<res-type>javax.sql.DataSource</res-type>
+  	<res-auth>Container</res-auth>
+  	<res-sharing-scope>Shareable</res-sharing-scope>
+  </resource-ref>
 </web-app>
