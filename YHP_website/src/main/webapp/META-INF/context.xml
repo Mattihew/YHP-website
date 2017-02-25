@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xml>
 <Context>
-<Resource name="jdbc/postgres"
+<Resource name="jdbc/YHP"
 auth="Container"
 type="javax.sql.DataSource"
-username="testUser"
-password="testPassword"
+username="YHPuser"
+password="YHPpassword"
 driverClassName="org.postgresql.Driver"
 url="jdbc:postgresql://127.0.0.1:5432/postgres?autoReconnect=true&amp;useSSL=false"
 maxActive="15"
