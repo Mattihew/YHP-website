@@ -8,7 +8,8 @@
 	</head>
 	<body>
 		<h1>Admin Panel</h1>
-		<a href="?action=dropUsers">Drop Users</a>
-		<a href="?action=createUsers">Create Users</a>
+		<a href="?action=createUsers">Create Users</a><br />
+		<a href="?action=dropUsers">Drop Users</a><br />
+		
 	</body>
 </html>

@@ -26,7 +26,7 @@ public class DatabaseCloser implements ServletContextListener
 	@Override
 	public void contextDestroyed(final ServletContextEvent sce)
 	{
-		Database.getInstance().dispose();
+		Database.dispose();
 	}
 
 	/**

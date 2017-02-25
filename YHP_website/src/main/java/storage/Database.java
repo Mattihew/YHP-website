@@ -1,6 +1,7 @@
 package storage;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -14,24 +15,48 @@ import javax.sql.DataSource;
  */
 public class Database
 {
-	private static Database instance;
+	private static Database INSTATANCE;
 	
-	private final Connection con;
+	private final DataSource ds;
+	
+	private Connection con;
 	
 	public static Database getInstance()
 	{
-		if (Database.instance == null)
+		if (Database.INSTATANCE == null)
 		{
 			try
 			{
-				Database.instance = new Database();
+				Database.INSTATANCE = new Database();
 			}
 			catch (NamingException | SQLException e)
 			{
 				e.printStackTrace();
 			}
 		}
-		return Database.instance;
+		else
+		{
+			try
+			{
+				if (Database.INSTATANCE.con.isClosed())
+				{
+					Database.INSTATANCE.con = Database.INSTATANCE.ds.getConnection();
+				}
+			}
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		return Database.INSTATANCE;
+	}
+	
+	public static void dispose()
+	{
+		if (Database.INSTATANCE != null)
+		{
+			Database.INSTATANCE.close();
+		}
 	}
 	
 	/**
@@ -43,8 +68,8 @@ public class Database
 	{
 		super();
 		Context init = new InitialContext();
-		DataSource ds = (DataSource) init.lookup("java:/comp/env/jdbc/YHP");
-		this.con = ds.getConnection();
+		this.ds = (DataSource) init.lookup("java:/comp/env/jdbc/YHP");
+		this.con = this.ds.getConnection();
 	}
 	
 	public boolean execute(final String sql)
@@ -61,7 +86,13 @@ public class Database
 		return false;
 	}
 	
-	public void dispose()
+	public ResultSet executeQuery(final String sql) throws SQLException
+	{
+		Statement stat = this.con.createStatement();
+		return stat.executeQuery(sql);
+	}
+	
+	public void close()
 	{
 		try
 		{
