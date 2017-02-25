@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class OrderServlet
+ * Servlet implementation class RemoveProductFromOrderServlet
  */
-public class OrderServlet extends HttpServlet
+public class RemoveProductFromOrderServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 
@@ -19,7 +19,7 @@ public class OrderServlet extends HttpServlet
 	 * 
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public OrderServlet()
+	public RemoveProductFromOrderServlet()
 	{
 		super();
 	}
@@ -27,12 +27,12 @@ public class OrderServlet extends HttpServlet
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see HttpServlet#doGet(HttpServletRequest, HttpServletResponse)
+	 * @see HttpServlet#doPost(HttpServletRequest, HttpServletResponse)
 	 */
 	@Override
-	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException
+	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException
 	{
-		request.getRequestDispatcher("/WEB-INF/pages/order.jsp").forward(request, response);
+		super.doPost(request, response);
 	}
 
 }

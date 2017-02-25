@@ -13,13 +13,12 @@ import javax.sql.DataSource;
 /**
  * @author Matt Rayner
  */
-public abstract class TableCache
+public abstract class DBTable
 {
 	/**
 	 * Class Constructor.
-	 *
 	 */
-	public TableCache()
+	public DBTable()
 	{
 		super();
 	}

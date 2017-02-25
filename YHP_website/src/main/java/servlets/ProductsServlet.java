@@ -14,16 +14,20 @@ public class ProductsServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+	/**
+	 * Class Constructor.
+	 * 
+	 * @see HttpServlet#HttpServlet()
+	 */
     public ProductsServlet()
     {
         super();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+    /**
+	 * {@inheritDoc}
+	 *
+	 * @see HttpServlet#doGet(HttpServletRequest, HttpServletResponse)
 	 */
 	@Override
 	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException
