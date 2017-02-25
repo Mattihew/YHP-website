@@ -1,12 +1,12 @@
 package models;
 
-public class User extends Person
+public class User
 {
 	/**
 	 * Class Constructor.
 	 */
-	public User(String forename, String surname)
+	public User()
 	{
-		super(forename, surname);
+		super();
 	}
 }
