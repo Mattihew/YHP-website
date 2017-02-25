@@ -19,8 +19,6 @@ public class Database
 	
 	private final DataSource ds;
 	
-	private Connection con;
-	
 	public static Database getInstance()
 	{
 		if (Database.INSTATANCE == null)
@@ -29,21 +27,7 @@ public class Database
 			{
 				Database.INSTATANCE = new Database();
 			}
-			catch (NamingException | SQLException e)
-			{
-				e.printStackTrace();
-			}
-		}
-		else
-		{
-			try
-			{
-				if (Database.INSTATANCE.con.isClosed())
-				{
-					Database.INSTATANCE.con = Database.INSTATANCE.ds.getConnection();
-				}
-			}
-			catch (SQLException e)
+			catch (NamingException e)
 			{
 				e.printStackTrace();
 			}
@@ -51,32 +35,23 @@ public class Database
 		return Database.INSTATANCE;
 	}
 	
-	public static void dispose()
-	{
-		if (Database.INSTATANCE != null)
-		{
-			Database.INSTATANCE.close();
-		}
-	}
-	
 	/**
 	 * Class Constructor.
 	 * @throws NamingException
 	 * @throws SQLException
 	 */
-	private Database() throws NamingException, SQLException
+	private Database() throws NamingException
 	{
 		super();
 		Context init = new InitialContext();
 		this.ds = (DataSource) init.lookup("java:/comp/env/jdbc/YHP");
-		this.con = this.ds.getConnection();
 	}
 	
 	public boolean execute(final String sql)
 	{
-		try
+		try (final Connection con = this.ds.getConnection())
 		{
-			Statement stat = this.con.createStatement();
+			Statement stat = con.createStatement();
 			return stat.execute(sql);
 		}
 		catch (SQLException e)
@@ -86,21 +61,18 @@ public class Database
 		return false;
 	}
 	
-	public ResultSet executeQuery(final String sql) throws SQLException
+	public ResultSet executeQuery(final String sql)
 	{
-		Statement stat = this.con.createStatement();
-		return stat.executeQuery(sql);
-	}
-	
-	public void close()
-	{
-		try
+		ResultSet results = null;
+		try (final Connection con = this.ds.getConnection())
 		{
-			this.con.close();
+			Statement stat = con.createStatement();
+			results = stat.executeQuery(sql);
 		}
 		catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
+		return results;
 	}
 }
