@@ -35,4 +35,9 @@ public class ProductsServlet extends HttpServlet
 		request.getRequestDispatcher("/WEB-INF/pages/products.jsp").forward(request, response);
 	}
 
+	@Override
+	protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException
+	{
+		this.doGet(req, resp);
+	}
 }

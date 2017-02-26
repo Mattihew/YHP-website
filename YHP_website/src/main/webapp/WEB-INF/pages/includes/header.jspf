@@ -42,7 +42,7 @@
 						<h4 class="modal-title">Login</h4>
 					</div>
 					<div class="modal-body">
-        				<form id="loginForm" method="POST" action="j_security_check">
+        				<form id="loginForm" method="POST" action="/j_security_check">
         					<div class="form-group">
         						<label for="j_username">Username:</label>
         						<input type="text" class="form-control" id="j_username" name="j_username" placeholder="username"/>
