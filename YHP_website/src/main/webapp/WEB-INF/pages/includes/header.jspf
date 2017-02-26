@@ -1,4 +1,11 @@
 		<%!
+			/**
+			 * creates a <code>&lt;li&gt;</code> element containing the name text and linking to the address.
+			 *
+			 * @param name the name the user will see.
+			 * @param address the address to navigate to when clicked.
+			 * @param request used to determin if currently on this page.
+			 */
 			private String addNavItem(final String name, final String address, final ServletRequest request)
 			{
 				final String uri = (String) request.getAttribute("javax.servlet.forward.request_uri");	
