@@ -1,0 +1,29 @@
+		<%!
+			private String addNavItem(final String name, final String address, final ServletRequest request)
+			{
+				final String uri = (String) request.getAttribute("javax.servlet.forward.request_uri");	
+				final StringBuilder results = new StringBuilder();
+				results.append("<li");
+				if (uri.equals(address))
+				{
+					results.append(" class=\"active\"");
+				}
+				results.append("><a href=\"").append(address).append("\">").append(name).append("</a>");
+				return results.toString();
+			}
+		%>
+		<header class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">Yeovil Healthcare Products</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<%=addNavItem("Account", "/Account", request) %>
+					<%=addNavItem("Products", "/", request) %>
+					<%=addNavItem("Order", "/Order", request) %>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+				</ul>
+			</div>
+		</header>
