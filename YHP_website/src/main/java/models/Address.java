@@ -8,14 +8,6 @@ public class Address
 	private String area_code;
 	private String country;
 
-	
-	//TODO might end up using this but instantiating null values? Means more granularity when adding stuff for a user
-	@SuppressWarnings("unused")
-	private Address()
-	{
-
-	}
-
 	/**
 	 * Class Constructor.
 	 */
@@ -37,27 +29,11 @@ public class Address
 	}
 
 	/**
-	 * @param building the building to set
-	 */
-	public void setBuilding(String building)
-	{
-		this.building = building;
-	}
-
-	/**
 	 * @return the street
 	 */
 	public String getStreet()
 	{
 		return street;
-	}
-
-	/**
-	 * @param street the street to set
-	 */
-	public void setStreet(String street)
-	{
-		this.street = street;
 	}
 
 	/**
@@ -69,14 +45,6 @@ public class Address
 	}
 
 	/**
-	 * @param city_town the city_town to set
-	 */
-	public void setCity_town(String city_town)
-	{
-		this.city_town = city_town;
-	}
-
-	/**
 	 * @return the area_code
 	 */
 	public String getArea_code()
@@ -85,26 +53,10 @@ public class Address
 	}
 
 	/**
-	 * @param area_code the area_code to set
-	 */
-	public void setArea_code(String area_code)
-	{
-		this.area_code = area_code;
-	}
-
-	/**
 	 * @return the country
 	 */
 	public String getCountry()
 	{
 		return country;
-	}
-
-	/**
-	 * @param country the country to set
-	 */
-	public void setCountry(String country)
-	{
-		this.country = country;
 	}
 }

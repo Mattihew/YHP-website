@@ -8,25 +8,14 @@ public abstract class Person
 	private final String forename;
 	private final String surname;
 
-	// @SuppressWarnings("unused")
-	// private Person()
-	// {
-	// //Default constructor should not be used
-	// this.id = null;
-	// this.forename = null;
-	// this.surname = null;
-	// }
-
 	public Person(String forename, String surname)
 	{
-		this.id = UUID.randomUUID();
-		this.forename = forename;
-		this.surname = surname;
+		this(UUID.randomUUID(), forename, surname);
 	}
 
-	public Person(String uuid, String forename, String surname)
+	public Person(UUID uuid, String forename, String surname)
 	{
-		this.id = UUID.fromString(uuid);
+		this.id = uuid;
 		this.forename = forename;
 		this.surname = surname;
 	}
