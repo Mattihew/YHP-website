@@ -52,8 +52,14 @@ public abstract class Person
 	public abstract static class Builder
 	{
 		private UUID id = UUID.randomUUID();
-		private String forename = "";
-		private String surname = "";
+		private String forename;
+		private String surname;
+		
+		public Builder(final String forename, final String surname)
+		{
+			this.forename = forename;
+			this.surname = surname;
+		}
 		
 		public Builder id(final UUID value)
 		{

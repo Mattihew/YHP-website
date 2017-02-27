@@ -59,13 +59,18 @@ public class User extends Person
 		private Address address = Address.NULL;
 		private UserRole role = UserRole.getDefault();
 		
+		public Builder(final String forename, final String surname)
+		{
+			super(forename, surname);
+		}
+		
 		public Builder address(final Address value)
 		{
 			this.address = value;
 			return this;
 		}
 		
-		public Builder userRole(final UserRole value)
+		public Builder role(final UserRole value)
 		{
 			this.role = value;
 			return this;
@@ -74,6 +79,11 @@ public class User extends Person
 		public User build()
 		{
 			return new User(this);
+		}
+		
+		public User toUser()
+		{
+			return this.build();
 		}
 	}
 }
