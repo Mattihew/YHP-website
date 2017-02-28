@@ -23,6 +23,12 @@
   	<servlet-class>servlets.OrderServlet</servlet-class>
   </servlet>
   <servlet>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<display-name>LoginServlet</display-name>
+  	<description></description>
+  	<servlet-class>servlets.LoginServlet</servlet-class>
+  </servlet>
+  <servlet>
   	<servlet-name>AddProductToOrderServlet</servlet-name>
   	<display-name>AddProductToOrderServlet</display-name>
   	<description></description>
@@ -51,6 +57,10 @@
   <servlet-mapping>
   	<servlet-name>OrderServlet</servlet-name>
   	<url-pattern>/Order</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<url-pattern>/Login</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>AddProductToOrderServlet</servlet-name>
@@ -103,7 +113,7 @@
   <login-config>
     <auth-method>FORM</auth-method>
     <form-login-config>
-        <form-login-page>/pages/loginFail.html</form-login-page>
+        <form-login-page>/Login</form-login-page>
         <form-error-page>/pages/loginFail.html</form-error-page>
     </form-login-config>
   </login-config>
