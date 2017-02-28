@@ -4,9 +4,6 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
-  <listener>
-  	<listener-class>listener.DatabaseCloser</listener-class>
-  </listener>
   <servlet>
   	<servlet-name>Products</servlet-name>
   	<display-name>Products</display-name>
