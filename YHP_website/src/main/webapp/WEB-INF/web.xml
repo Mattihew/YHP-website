@@ -4,12 +4,9 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
-  <listener>
-  	<listener-class>listener.DatabaseCloser</listener-class>
-  </listener>
   <servlet>
-  	<servlet-name>Products</servlet-name>
-  	<display-name>Products</display-name>
+  	<servlet-name>ProductsServlet</servlet-name>
+  	<display-name>ProductsServlet</display-name>
   	<description></description>
   	<servlet-class>servlets.ProductsServlet</servlet-class>
   </servlet>
@@ -24,6 +21,12 @@
   	<display-name>OrderServlet</display-name>
   	<description></description>
   	<servlet-class>servlets.OrderServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<display-name>LoginServlet</display-name>
+  	<description></description>
+  	<servlet-class>servlets.LoginServlet</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>AddProductToOrderServlet</servlet-name>
@@ -44,7 +47,7 @@
   	<servlet-class>servlets.AdminServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>Products</servlet-name>
+  	<servlet-name>ProductsServlet</servlet-name>
   	<url-pattern>/Products</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
@@ -54,6 +57,10 @@
   <servlet-mapping>
   	<servlet-name>OrderServlet</servlet-name>
   	<url-pattern>/Order</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<url-pattern>/Login</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>AddProductToOrderServlet</servlet-name>
@@ -76,4 +83,40 @@
   	<res-auth>Container</res-auth>
   	<res-sharing-scope>Shareable</res-sharing-scope>
   </resource-ref>
+  
+  <security-constraint>
+    <web-resource-collection>
+        <web-resource-name>my application</web-resource-name>
+        <url-pattern>/Admin</url-pattern>
+        <http-method>GET</http-method>
+        <http-method>POST</http-method>
+    </web-resource-collection>
+
+    <auth-constraint>
+        <role-name>admin</role-name>
+    </auth-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+    <web-resource-collection>
+        <web-resource-name>my application</web-resource-name>
+        <url-pattern>/Account</url-pattern>
+        <http-method>GET</http-method>
+        <http-method>POST</http-method>
+    </web-resource-collection>
+
+    <auth-constraint>
+        <role-name>user</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <login-config>
+    <auth-method>FORM</auth-method>
+    <form-login-config>
+        <form-login-page>/Login</form-login-page>
+        <form-error-page>/pages/loginFail.html</form-error-page>
+    </form-login-config>
+  </login-config>
+  <security-role><role-name>admin</role-name></security-role>
+  <security-role><role-name>user</role-name></security-role>
 </web-app>
