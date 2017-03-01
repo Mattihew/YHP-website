@@ -8,7 +8,7 @@
 		<title>Login</title>
 	</head>
 	<body>
-		<div class="container">
+		<div class="container-fluid">
 			<%@ include file="./includes/header.jspf" %>
 			<h1>Login</h1>
 			<form id="loginForm" method="post" action="./j_security_check">
