@@ -86,7 +86,7 @@ public enum UserRole
 	 */
 	UserRole searchParents(final Collection<String> names)
 	{
-		if(names.contains(this.name()))
+		if(names.contains(this.name().toLowerCase()))
 		{
 			return this;
 		}

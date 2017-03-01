@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import storage.Database;
+import storage.UserCache;
 
 /**
  * Servlet implementation class AdminServlet
@@ -45,6 +46,8 @@ public class AdminServlet extends HttpServlet
 				case "createUsers":
 					Database.getInstance().execute("CREATE TABLE public.users(id uuid NOT NULL, forename character varying(20), surname character varying(20), CONSTRAINT users_pkey PRIMARY KEY (id))");
 					break;
+				case "testUser":
+					System.out.println(new UserCache(Database.getInstance()).getUser("test"));
 				default:
 					break;
 			}
