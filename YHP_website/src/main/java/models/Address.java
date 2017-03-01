@@ -2,16 +2,16 @@ package models;
 
 public class Address
 {
-	private String building;
-	private String street;
-	private String city_town;
-	private String area_code;
-	private String country;
+	private final String building;
+	private final String street;
+	private final String city_town;
+	private final String area_code;
+	private final String country;
 
 	/**
 	 * Class Constructor.
 	 */
-	public Address(String building, String street, String city_town, String area_code, String country)
+	public Address(final String building, final String street, final String city_town, final String area_code, final String country)
 	{
 		this.building = building;
 		this.street = street;
@@ -25,7 +25,7 @@ public class Address
 	 */
 	public String getBuilding()
 	{
-		return building;
+		return this.building;
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class Address
 	 */
 	public String getStreet()
 	{
-		return street;
+		return this.street;
 	}
 
 	/**
@@ -41,7 +41,7 @@ public class Address
 	 */
 	public String getCity_town()
 	{
-		return city_town;
+		return this.city_town;
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class Address
 	 */
 	public String getArea_code()
 	{
-		return area_code;
+		return this.area_code;
 	}
 
 	/**
@@ -57,6 +57,16 @@ public class Address
 	 */
 	public String getCountry()
 	{
-		return country;
+		return this.country;
 	}
+	
+	public static final Address NULL = new Address(null,null,null,null,null)
+	{
+		@Override
+		public boolean equals(final Object obj)
+		{
+			return obj == null || super.equals(obj);
+		}
+		
+	};
 }
