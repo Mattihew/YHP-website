@@ -47,7 +47,7 @@ public class AdminServlet extends HttpServlet
 					Database.getInstance().execute("CREATE TABLE public.users(id uuid NOT NULL, forename character varying(20), surname character varying(20), CONSTRAINT users_pkey PRIMARY KEY (id))");
 					break;
 				case "testUser":
-					System.out.println(new UserCache(Database.getInstance()).getUser("matt"));
+					System.out.println(new UserCache(Database.getInstance()).getUser("test"));
 				default:
 					break;
 			}

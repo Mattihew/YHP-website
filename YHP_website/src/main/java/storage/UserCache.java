@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.User;
+import models.UserRole;
 
 public class UserCache
 {
@@ -31,7 +32,9 @@ public class UserCache
 					rolenames.add(roles.getString(1));
 				}
 				
-				//insert user builder here
+				final User.Builder userBuilder = new User.Builder(users.getString(1), users.getString(1));
+				userBuilder.role(UserRole.fromDatabaseValues(rolenames));
+				user = userBuilder.build();
 			}
 		}
 		catch (SQLException e)
