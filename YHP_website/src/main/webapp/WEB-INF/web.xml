@@ -29,6 +29,18 @@
   	<servlet-class>servlets.LoginServlet</servlet-class>
   </servlet>
   <servlet>
+  	<servlet-name>LogoutServlet</servlet-name>
+  	<display-name>LogoutServlet</display-name>
+  	<description></description>
+  	<servlet-class>servlets.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>SignUpServlet</servlet-name>
+  	<display-name>SignUpServlet</display-name>
+  	<description></description>
+  	<servlet-class>servlets.SignUpServlet</servlet-class>
+  </servlet>
+  <servlet>
   	<servlet-name>AddProductToOrderServlet</servlet-name>
   	<display-name>AddProductToOrderServlet</display-name>
   	<description></description>
@@ -73,6 +85,14 @@
   <servlet-mapping>
   	<servlet-name>AdminServlet</servlet-name>
   	<url-pattern>/Admin</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>LogoutServlet</servlet-name>
+  	<url-pattern>/Logout</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>SignUpServlet</servlet-name>
+  	<url-pattern>/SignUp</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
   	<welcome-file>Products</welcome-file>
