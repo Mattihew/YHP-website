@@ -4,3 +4,4 @@ jdk:
 script: mvn test -f YHP_website/pom.xml
 notifications:
   email: false
+  slack: ucy1617systems:6VndviXw0DnRmDdh380Tw1Ia
