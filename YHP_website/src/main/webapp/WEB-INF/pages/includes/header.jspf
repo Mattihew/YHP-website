@@ -1,3 +1,4 @@
+		<%@ page import="java.security.Principal"%>
 		<%!
 			/**
 			 * creates a <code>&lt;li&gt;</code> element containing the name text and linking to the address.
@@ -16,7 +17,7 @@
 				{
 					results.append(" class=\"active\"");
 				}
-				results.append("><a href=\"").append(context + address).append("\">").append(name).append("</a>");
+				results.append("><a href=\"").append(context + address).append("\">").append(name).append("</a></li>");
 				return results.toString();
 			}
 		%>
@@ -29,16 +30,39 @@
 					<%=addNavItem("Order", "/Order", request) %>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<%
-					final String label;
-					if (request.getUserPrincipal() == null)
+					<%					
+					//Sign up
+					final Principal user = request.getUserPrincipal();
+					final String userLabel;
+					if (null == user)
 					{
-						label = "<span class='glyphicon glyphicon-log-in'></span> Login";
+						userLabel = "<span class='glyphicon glyphicon-user'></span> Sign Up";
+						%><%=addNavItem(userLabel,"/SignUp",request)%><%
 					}
 					else
 					{
-						label = request.getUserPrincipal().getName();
+						userLabel = request.getUserPrincipal().getName();
+						//TODO get user first name from username to display
+						%><li><a href=""><span class="glyphicon glyphicon-user"></span> user</a></li>
+						<%
 					}
-					%><%= addNavItem(label,"/Account",request) %>
+					
+					
+					//Login
+					final String actionLabel;
+					final String target;
+					if (null == user)
+					{
+						actionLabel = "<span class='glyphicon glyphicon-log-in'></span> Login";
+						target = "/Account";
+					}
+					else
+					{
+						//Logout
+						actionLabel = "<span class='glyphicon glyphicon-log-out'></span> Logout";
+						target = "/Logout";
+					}
+					%>
+					<%=addNavItem(actionLabel,target,request)%>
 				</ul>
 		</header>
