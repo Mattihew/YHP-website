@@ -25,12 +25,21 @@
 					<a class="navbar-brand" href="/">Yeovil Healthcare Products</a>
 				</div>
 				<ul class="nav navbar-nav">
-					<%=addNavItem("Account", "/Account", request) %>
 					<%=addNavItem("Products", "/", request) %>
 					<%=addNavItem("Order", "/Order", request) %>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#loginModal" data-toggle="modal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+					<%
+					final String label;
+					if (request.getUserPrincipal() == null)
+					{
+						label = "<span class='glyphicon glyphicon-log-in'></span> Login";
+					}
+					else
+					{
+						label = request.getUserPrincipal().getName();
+					}
+					%><%= addNavItem(label,"/Account",request) %>
 				</ul>
 			</div>
 		</header>
