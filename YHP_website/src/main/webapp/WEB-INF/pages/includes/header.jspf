@@ -41,7 +41,7 @@
 					}
 					else
 					{
-						userLabel = request.getUserPrincipal().getName();
+						userLabel = user.getName();
 						//TODO get user first name from username to display
 						%><li><a href=""><span class="glyphicon glyphicon-user"></span> user</a></li>
 						<%
