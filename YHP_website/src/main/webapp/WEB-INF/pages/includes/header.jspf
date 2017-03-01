@@ -37,13 +37,13 @@
 					if (null == user)
 					{
 						userLabel = "<span class='glyphicon glyphicon-user'></span> Sign Up";
-						%><%=addNavItem(userLabel,"/SignUp",request)%><%
+						%><%=addNavItem(userLabel,"/Account",request)%><%
 					}
 					else
 					{
 						userLabel = user.getName();
 						//TODO get user first name from username to display
-						%><li><a href=""><span class="glyphicon glyphicon-user"></span> user</a></li>
+						%><%=addNavItem(userLabel,"/Account?action=edit",request)%><li><a href=""><span class="glyphicon glyphicon-user"></span> user</a></li>
 						<%
 					}
 					

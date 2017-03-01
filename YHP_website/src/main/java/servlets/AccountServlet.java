@@ -1,11 +1,14 @@
 package servlets;
 
 import java.io.IOException;
+import java.security.Principal;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import storage.UserCache;
 
 /**
  * Servlet implementation class AccountServlet
@@ -32,7 +35,24 @@ public class AccountServlet extends HttpServlet
 	@Override
 	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException
 	{
-		request.getRequestDispatcher("/WEB-INF/pages/account.jsp").forward(request, response);
+		final Principal user = request.getUserPrincipal();
+		final UserCache userCache = UserCache.getInstance();
+		
+		if (null == user)
+		{
+			request.getRequestDispatcher("/WEB-INF/pages/products.jsp").forward(request, response);
+			System.out.println("new user");
+		}
+		else if (request.isUserInRole("admin"))
+		{
+			request.getRequestDispatcher("/WEB-INF/pages/products.jsp").forward(request, response);
+			System.out.println("admin");
+		}
+		
+		//if user id == parameter id
+		//request.getRequestDispatcher("/").forward(request, response);
+		
+		//request.getRequestDispatcher("/WEB-INF/pages/account.jsp").forward(request, response);
 	}
 
 	/**
@@ -44,6 +64,8 @@ public class AccountServlet extends HttpServlet
 	protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException
 	{
 		super.doPost(req, resp);
+		
+		//add user and edit logic here
 	}
 
 }
