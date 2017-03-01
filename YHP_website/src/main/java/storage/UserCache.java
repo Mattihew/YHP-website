@@ -3,7 +3,16 @@ package storage;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import org.apache.commons.dbutils.BaseResultSetHandler;
+import org.apache.commons.dbutils.BasicRowProcessor;
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.AbstractListHandler;
+import org.apache.commons.dbutils.handlers.ColumnListHandler;
 
 import models.User;
 import models.UserRole;
@@ -12,6 +21,8 @@ public class UserCache
 {
 	private final Database database;
 	
+	private final Map<UUID, User> users = new HashMap<>();
+	
 	public UserCache(final Database database)
 	{
 		this.database = database;
@@ -19,32 +30,46 @@ public class UserCache
 	
 	public User getUser(final String username)
 	{
-		ResultSet users = this.database.executeQuery("SELECT * FROM users WHERE user_name='" + username + "';");
-		User user = null;
+		QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+		List<User> users = null;;
 		try
 		{
-			if (users.next())
-			{
-				ResultSet roles = this.database.executeQuery("SELECT role_name FROM user_roles WHERE user_name='" + username + "'");
-				final List<String> rolenames = new ArrayList<>();
-				while (roles.next())
-				{
-					rolenames.add(roles.getString(1));
-				}
-				
-				final User.Builder userBuilder = new User.Builder(users.getString(1), users.getString(1));
-				userBuilder.role(UserRole.fromDatabaseValues(rolenames));
-				user = userBuilder.build();
-			}
-		}
+			users = run.query(
+					"SELECT * FROM users WHERE user_name='" + username + "';",
+					new UserResultsSetHandler());
+		} 
 		catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
-		finally
+		if (users == null || users.isEmpty())
 		{
-			this.database.close();
+			return null;
 		}
-		return user;
+		return users.get(0);
+	}
+	
+	public boolean putUser(final User user)
+	{
+		//TODO
+		return false;
+	}
+	
+	private class UserResultsSetHandler extends AbstractListHandler<User>
+	{
+		@Override
+		protected User handleRow(ResultSet rs) throws SQLException
+		{
+			final User.Builder userBuilder = 
+					new User.Builder(rs.getString("forename"), rs.getString("surname"));
+			final QueryRunner roleRunner = new QueryRunner(Database.getInstance().getDataSource());
+			final List<String> roles = roleRunner.query(
+					"SELECT role_name FROM user_roles WHERE user_name='" + rs.getString("user_name") + "'",
+					new ColumnListHandler<String>());
+			userBuilder.id(UUID.fromString(rs.getString("user_id")));
+			userBuilder.role(UserRole.fromDatabaseValues(roles));
+			// userBuilder.address(value); TODO add address getter.
+			return userBuilder.build();
+		}
 	}
 }
