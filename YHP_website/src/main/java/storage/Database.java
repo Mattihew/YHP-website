@@ -87,6 +87,11 @@ public class Database
 		return results;
 	}
 	
+	public DataSource getDataSource()
+	{
+		return this.ds;
+	}
+	
 	public void close()
 	{
 		try
