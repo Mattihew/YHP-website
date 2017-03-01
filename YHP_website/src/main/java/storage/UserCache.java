@@ -22,7 +22,7 @@ public class UserCache
 	
 	private final Map<UUID, User> users = new HashMap<>();
 	
-	public UserCache getInstance()
+	public static UserCache getInstance()
 	{
 		if (UserCache.INSTANCE == null)
 		{
@@ -31,7 +31,7 @@ public class UserCache
 		return UserCache.INSTANCE;
 	}
 	
-	public UserCache(final Database database)
+	private UserCache(final Database database)
 	{
 		this.database = database;
 	}
@@ -44,8 +44,8 @@ public class UserCache
 		try
 		{
 			users = run.query(
-					"SELECT * FROM users WHERE user_name='" + username + "';",
-					new UserResultsSetHandler());
+					"SELECT * FROM users WHERE user_name='?';",
+					new UserResultsSetHandler(), username);
 		}
 		catch (SQLException e)
 		{
@@ -60,7 +60,7 @@ public class UserCache
 	
 	public boolean putUser(final User user)
 	{
-		//TODO
+		QueryRunner run = new QueryRunner(this.database.getDataSource());
 		return false;
 	}
 	
@@ -73,8 +73,8 @@ public class UserCache
 					new User.Builder(rs.getString("forename"), rs.getString("surname"));
 			final QueryRunner roleRunner = new QueryRunner(Database.getInstance().getDataSource());
 			final List<String> roles = roleRunner.query(
-					"SELECT role_name FROM user_roles WHERE user_name='" + rs.getString("user_name") + "'",
-					new ColumnListHandler<String>());
+					"SELECT role_name FROM user_roles WHERE user_name='?';",
+					new ColumnListHandler<String>(), rs.getString("user_name"));
 			userBuilder.id(UUID.fromString(rs.getString("user_id")));
 			userBuilder.role(UserRole.fromDatabaseValues(roles));
 			// userBuilder.address(value); TODO add address getter.
