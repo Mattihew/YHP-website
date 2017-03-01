@@ -16,12 +16,14 @@ public enum UserRole
 		@Override
 		public Set<String> getDatabaseValues()
 		{
+			// returns an empty set as NULL role should not be entered into database.
 			return Collections.emptySet();
 		}
 
 		@Override
 		UserRole searchParents(final Collection<String> name)
 		{
+			//EVERY user has the NULL role.
 			return this;
 		}
 	},
@@ -63,12 +65,14 @@ public enum UserRole
 	 */
 	public Set<String> getDatabaseValues()
 	{
+		//dvValues is cached so this calculation only happens once if needed.
 		if (this.dbValues == null)
 		{
+			//gets the database values from the parent.
 			final Collection<String> parentValues = this.parentRole.getDatabaseValues();
 			final Set<String> result = new LinkedHashSet<>(parentValues.size() + 1);
-			result.add(this.name());
-			result.addAll(parentValues);
+			result.add(this.name()); // adds it's own database role.
+			result.addAll(parentValues); // add parent database roles.
 			this.dbValues = Collections.unmodifiableSet(result);
 		}
 		return this.dbValues;
