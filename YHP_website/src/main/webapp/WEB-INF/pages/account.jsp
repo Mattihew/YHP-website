@@ -5,10 +5,10 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 		<%@ include file="./includes/bootstrapImports.jspf" %>
-		<title>Insert title here</title>
+		<title>Account</title>
 	</head>
 	<body>
-		<div class="container">
+		<div class="container-fluid">
 			<%@ include file="./includes/header.jspf" %>
 			Customer account
 		</div>

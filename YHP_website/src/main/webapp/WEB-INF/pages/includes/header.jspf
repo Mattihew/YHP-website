@@ -21,7 +21,6 @@
 			}
 		%>
 		<header class="navbar navbar-default">
-			<div class="container-fluid">
 				<div class="navbar-header">
 					<a class="navbar-brand" href="<%=((HttpServletRequest) request).getContextPath()%>">Yeovil Healthcare Products</a>
 				</div>
@@ -42,5 +41,4 @@
 					}
 					%><%= addNavItem(label,"/Account",request) %>
 				</ul>
-			</div>
 		</header>

@@ -8,7 +8,7 @@
 		<title>Admin Panel</title>
 	</head>
 	<body>
-		<div class="container">
+		<div class="container-fluid">
 			<%@ include file="./includes/header.jspf" %>
 			<h1>Admin Panel</h1>
 			<a href="?action=createUsers">Create Users</a><br />
