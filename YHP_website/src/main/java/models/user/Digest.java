@@ -28,4 +28,10 @@ public class Digest
 	{
 		return this.iterations;
 	}
+
+	@Override
+	public String toString()
+	{
+		return String.format("%s$%d$%s", this.salt, Integer.valueOf(this.iterations), this.encodedValue);
+	}
 }
