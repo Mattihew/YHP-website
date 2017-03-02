@@ -38,12 +38,7 @@ public class AccountServlet extends HttpServlet
 		final Principal user = request.getUserPrincipal();
 		final UserCache userCache = UserCache.getInstance();
 		
-		if (null == user)
-		{
-			request.getRequestDispatcher("/WEB-INF/pages/products.jsp").forward(request, response);
-			System.out.println("new user");
-		}
-		else if (request.isUserInRole("admin"))
+		if (request.isUserInRole("admin"))
 		{
 			request.getRequestDispatcher("/WEB-INF/pages/products.jsp").forward(request, response);
 			System.out.println("admin");
