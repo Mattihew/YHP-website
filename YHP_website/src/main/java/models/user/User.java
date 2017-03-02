@@ -1,4 +1,7 @@
-package models;
+package models.user;
+
+import models.Address;
+import models.Person;
 
 public class User extends Person
 {
@@ -7,41 +10,17 @@ public class User extends Person
 	
 	private final UserRole role;
 	
-	/**
-	 * Class Constructor.
-	 */
-	public User(final String forename, final String surname)
-	{
-		this(forename, surname, UserRole.getDefault());
-	}
+	private final String username;
 	
-	/**
-	 * Class Constructor.
-	 *
-	 * @param forename
-	 * @param surname
-	 * @param userRole
-	 */
-	public User(final String forename, final String surname, final UserRole userRole)
-	{
-		this(forename, surname, userRole, Address.NULL);
-	}
-	
-	/**
-	 * Class Constructor.
-	 */
-	public User(final String forename, final String surname, final UserRole userRole, final Address address)
-	{
-		super(forename, surname);
-		this.address = address;
-		this.role = userRole;
-	}
+	private final Digest digest;
 	
 	protected User(final Builder builder)
 	{
 		super(builder);
 		this.address = builder.address;
 		this.role = builder.role;
+		this.username = builder.username;
+		this.digest = builder.digest;
 	}
 	
 	public Address getAddress()
@@ -54,10 +33,22 @@ public class User extends Person
 		return this.role;
 	}
 	
+	public String getUsername()
+	{
+		return this.username;
+	}
+	
+	public Digest getDigest()
+	{
+		return this.digest;
+	}
+	
 	public static class Builder extends Person.Builder
 	{
 		private Address address = Address.NULL;
 		private UserRole role = UserRole.getDefault();
+		private String username;
+		private Digest digest;
 		
 		public Builder(final String forename, final String surname)
 		{
@@ -73,6 +64,18 @@ public class User extends Person
 		public Builder role(final UserRole value)
 		{
 			this.role = value;
+			return this;
+		}
+		
+		public Builder username(final String value)
+		{
+			this.username = value;
+			return this;
+		}
+		
+		public Builder digest(final Digest value)
+		{
+			this.digest = value;
 			return this;
 		}
 		
