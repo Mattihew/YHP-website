@@ -11,18 +11,20 @@
 		<div class="container-fluid">
 			<%@ include file="./includes/header.jspf" %>
 			<h1>Login</h1>
-			<form id="loginForm" method="post" action="./j_security_check">
-				<div class="form-group">
-					<label for="j_username">Username:</label>
-					<input type="text" class="form-control" id="j_username" name="j_username" placeholder="username" />
-				</div>
-				<div class="form-group">
-					<label for="j_password">Password:</label>
-					<input type="password" class="form-control" id="j_password" name="j_password" placeholder="password" />
-				</div>
-				<button type="submit" class="btn btn-success">Login</button>
-				<button type="reset" class="btn btn-danger">Clear</button>
-			</form>
+			<div class="col-sm-4 col-sm-offset-4">
+				<form id="loginForm" method="post" action="./j_security_check">
+					<div class="form-group">
+						<label for="j_username">Username:</label>
+						<input type="text" class="form-control" id="j_username" name="j_username" placeholder="username" />
+					</div>
+					<div class="form-group">
+						<label for="j_password">Password:</label>
+						<input type="password" class="form-control" id="j_password" name="j_password" placeholder="password" />
+					</div>
+					<button type="submit" class="btn btn-success">Login</button>
+					<button type="reset" class="btn btn-danger">Clear</button>
+				</form>
+			</div>
 		</div>
 	</body>
 </html>
