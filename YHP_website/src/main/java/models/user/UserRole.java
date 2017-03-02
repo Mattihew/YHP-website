@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Matt Rayner
  */
@@ -91,6 +93,11 @@ public enum UserRole
 			return this;
 		}
 		return this.parentRole.searchParents(names);
+	}
+	
+	public boolean isUserinRole(final HttpServletRequest request)
+	{
+		return request.isUserInRole(this.name().toLowerCase());
 	}
 	
 	/**
