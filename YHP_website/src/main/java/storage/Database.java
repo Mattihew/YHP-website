@@ -1,14 +1,16 @@
 package storage;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import org.apache.commons.dbutils.AsyncQueryRunner;
+import org.apache.commons.dbutils.QueryRunner;
 
 /**
  * @author Matt Rayner
@@ -18,7 +20,12 @@ public class Database
 	private static Database INSTATANCE;
 	
 	private final DataSource ds;
-	private Connection con;
+	
+	private QueryRunner qr;
+	
+	private AsyncQueryRunner asqr;
+	
+	private final ExecutorService xs = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 	
 	public static Database getInstance()
 	{
@@ -48,62 +55,21 @@ public class Database
 		this.ds = (DataSource) init.lookup("java:/comp/env/jdbc/YHP");
 	}
 	
-	private Connection getConnection() throws SQLException
+	public QueryRunner getQueryRunner()
 	{
-		if (this.con == null || this.con.isClosed())
+		if (this.qr == null)
 		{
-			this.con = this.ds.getConnection();
+			this.qr = new QueryRunner(this.ds);
 		}
-		return this.con;
+		return this.qr;
 	}
 	
-	public boolean execute(final String sql)
+	public AsyncQueryRunner getAsyncQueryRunner()
 	{
-		try (final Connection con = this.getConnection())
+		if (this.asqr == null)
 		{
-			Statement stat = con.createStatement();
-			return stat.execute(sql);
+			this.asqr = new AsyncQueryRunner(this.xs, this.qr);
 		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		return false;
-	}
-	
-	public ResultSet executeQuery(final String sql)
-	{
-		ResultSet results = null;
-		try
-		{
-			this.getConnection();
-			Statement stat = this.con.createStatement();
-			results = stat.executeQuery(sql);
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		return results;
-	}
-	
-	public DataSource getDataSource()
-	{
-		return this.ds;
-	}
-	
-	public void close()
-	{
-		try
-		{
-			if (!this.con.isClosed())
-			{
-				this.con.close();
-			}
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
+		return this.asqr;
 	}
 }
