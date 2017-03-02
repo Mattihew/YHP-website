@@ -1,7 +1,10 @@
 package models;
 
+import java.util.UUID;
+
 public class Address
 {
+	private final UUID id;
 	private final String building;
 	private final String street;
 	private final String city_town;
@@ -11,13 +14,19 @@ public class Address
 	/**
 	 * Class Constructor.
 	 */
-	public Address(final String building, final String street, final String city_town, final String area_code, final String country)
+	public Address(final UUID id, final String building, final String street, final String city_town, final String area_code, final String country)
 	{
+		this.id = id;
 		this.building = building;
 		this.street = street;
 		this.city_town = city_town;
 		this.area_code = area_code;
 		this.country = country;
+	}
+	
+	public UUID getId()
+	{
+		return this.id;
 	}
 
 	/**
@@ -60,7 +69,7 @@ public class Address
 		return this.country;
 	}
 	
-	public static final Address NULL = new Address(null,null,null,null,null)
+	public static final Address NULL = new Address(null,null,null,null,null,null)
 	{
 		@Override
 		public boolean equals(final Object obj)

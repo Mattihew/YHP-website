@@ -1,4 +1,4 @@
-package models;
+package models.user;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -14,7 +14,7 @@ public enum UserRole
 	NULL()
 	{
 		@Override
-		public Set<String> getDatabaseValues()
+		public Set<String> toDatabaseValues()
 		{
 			// returns an empty set as NULL role should not be entered into database.
 			return Collections.emptySet();
@@ -63,13 +63,13 @@ public enum UserRole
 	 * 
 	 * @return Set of role names.
 	 */
-	public Set<String> getDatabaseValues()
+	public Set<String> toDatabaseValues()
 	{
 		//dvValues is cached so this calculation only happens once if needed.
 		if (this.dbValues == null)
 		{
 			//gets the database values from the parent.
-			final Collection<String> parentValues = this.parentRole.getDatabaseValues();
+			final Collection<String> parentValues = this.parentRole.toDatabaseValues();
 			final Set<String> result = new LinkedHashSet<>(parentValues.size() + 1);
 			result.add(this.name()); // adds it's own database role.
 			result.addAll(parentValues); // add parent database roles.
