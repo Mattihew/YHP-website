@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import models.user.User;
 import models.user.UserRole;
+import storage.UserCache;
 
 /**
  * Servlet implementation class AccountServlet
@@ -38,12 +39,31 @@ public class AccountServlet extends HttpServlet
 	@Override
 	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException
 	{
-		if (UserRole.ADMIN.isUserinRole(request))
+		String userid = request.getParameter("user");
+		if (userid != null)
 		{
-			//request.getRequestDispatcher("/WEB-INF/pages/products.jsp").forward(request, response);
+			if (UserRole.ADMIN.isUserinRole(request))
+			{
+				request.getRequestDispatcher("/WEB-INF/pages/account.jsp?user=" + userid).forward(request, response);
+			}
+			else
+			{
+				User user = UserCache.getInstance().getUser(request);
+				if (user.getUuid().toString().equals(userid))
+				{
+					request.getRequestDispatcher("/WEB-INF/pages/account.jsp?user=" + userid).forward(request, response);
+				}
+			}
 		}
+		else
+		{
+			User user = UserCache.getInstance().getUser(request);
+			userid = user.getUuid().toString();
+			request.getRequestDispatcher("/WEB-INF/pages/account.jsp?user=" + userid).forward(request, response);
+		}
+			
+
 		
-		request.getRequestDispatcher("/WEB-INF/pages/account.jsp").forward(request, response);
 	}
 
 	/**
