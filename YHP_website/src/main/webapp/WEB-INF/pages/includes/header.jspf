@@ -1,4 +1,5 @@
 		<%@ page import="java.security.Principal"%>
+		<%@ page import="storage.UserCache"%>
 		<%!
 			/**
 			 * creates a <code>&lt;li&gt;</code> element containing the name text and linking to the address.
@@ -41,10 +42,9 @@
 					}
 					else
 					{
-						userLabel = user.getName();
+						userLabel = "<span class='glyphicon glyphicon-user'></span> " + UserCache.getInstance().getUser(user.getName()).getForename();
 						//TODO get user first name from username to display
-						%><%=addNavItem(userLabel,"/Account?action=edit",request)%><li><a href=""><span class="glyphicon glyphicon-user"></span> user</a></li>
-						<%
+						%><%=addNavItem(userLabel,"/Account",request)%><%
 					}
 					
 					
