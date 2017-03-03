@@ -58,7 +58,7 @@
 					if (null == user)
 					{
 						actionLabel = "<span class='glyphicon glyphicon-log-in'></span> Login";
-						target = new String[]{"/Account", "/j_security_check"};
+						target = new String[]{"?auth=true", "/j_security_check"};
 					}
 					else
 					{
