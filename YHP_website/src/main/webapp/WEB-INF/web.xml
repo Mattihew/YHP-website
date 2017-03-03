@@ -134,7 +134,7 @@
     <auth-method>FORM</auth-method>
     <form-login-config>
         <form-login-page>/Login</form-login-page>
-        <form-error-page>/pages/loginFail.html</form-error-page>
+        <form-error-page>/Login</form-error-page>
     </form-login-config>
   </login-config>
   <security-role><role-name>admin</role-name></security-role>

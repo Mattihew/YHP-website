@@ -8,17 +8,21 @@
 			 * @param address the address to navigate to when clicked.
 			 * @param request used to determin if currently on this page.
 			 */
-			private String addNavItem(final String name, final String address, final ServletRequest request)
+			private String addNavItem(final ServletRequest request, final String name, final String... addresses)
 			{
 				final String uri = (String) request.getAttribute("javax.servlet.forward.request_uri");
 				final String context = ((HttpServletRequest) request).getContextPath();
 				final StringBuilder results = new StringBuilder();
 				results.append("<li");
-				if (uri.equals(context + address))
+				for (String address : addresses)
 				{
-					results.append(" class=\"active\"");
+					if (uri.equals(context + address))
+					{
+						results.append(" class=\"active\"");
+						break;
+					}
 				}
-				results.append("><a href=\"").append(context + address).append("\">").append(name).append("</a></li>");
+				results.append("><a href=\"").append(context + addresses[0]).append("\">").append(name).append("</a></li>");
 				return results.toString();
 			}
 		%>
@@ -27,8 +31,8 @@
 					<a class="navbar-brand" href="<%=((HttpServletRequest) request).getContextPath()%>">Yeovil Healthcare Products</a>
 				</div>
 				<ul class="nav navbar-nav">
-					<%=addNavItem("Products", "/", request) %>
-					<%=addNavItem("Order", "/Order", request) %>
+					<%=addNavItem(request, "Products", "/") %>
+					<%=addNavItem(request, "Order", "/Order") %>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<%					
@@ -38,31 +42,31 @@
 					if (null == user)
 					{
 						userLabel = "<span class='glyphicon glyphicon-user'></span> Sign Up";
-						%><%=addNavItem(userLabel,"/SignUp",request)%><%
+						%><%=addNavItem(request, userLabel,"/SignUp")%><%
 					}
 					else
 					{
 						userLabel = "<span class='glyphicon glyphicon-user'></span> " + UserCache.getInstance().getUser(user.getName()).getForename();
 						//TODO get user first name from username to display
-						%><%=addNavItem(userLabel,"/Account",request)%><%
+						%><%=addNavItem(request, userLabel,"/Account")%><%
 					}
 					
 					
 					//Login
 					final String actionLabel;
-					final String target;
+					final String[] target;
 					if (null == user)
 					{
 						actionLabel = "<span class='glyphicon glyphicon-log-in'></span> Login";
-						target = "/Account";
+						target = new String[]{"/Account", "/j_security_check"};
 					}
 					else
 					{
 						//Logout
 						actionLabel = "<span class='glyphicon glyphicon-log-out'></span> Logout";
-						target = "/Logout";
+						target = new String[]{"/Logout"};
 					}
 					%>
-					<%=addNavItem(actionLabel,target,request)%>
+					<%=addNavItem(request, actionLabel,target)%>
 				</ul>
 		</header>
