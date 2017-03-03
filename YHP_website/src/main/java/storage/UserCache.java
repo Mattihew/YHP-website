@@ -115,7 +115,7 @@ public class UserCache
 			userBuilder.role(UserRole.fromDatabaseValues(roles));
 			userBuilder.id(UUID.fromString(rs.getString(UserCache.Column.USER_ID.toString()))); //convert string to uuid
 			userBuilder.username(rs.getString(UserCache.Column.USER_NAME.toString()));
-			userBuilder.digest(new Digest(rs.getString(UserCache.Column.USER_PASS.toString())));
+			userBuilder.digest(Digest.fromEncrypted(rs.getString(UserCache.Column.USER_PASS.toString())));
 			// userBuilder.address(value); TODO add address getter.
 			return userBuilder.build();
 		}

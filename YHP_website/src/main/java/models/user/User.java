@@ -1,5 +1,9 @@
 package models.user;
 
+import java.security.NoSuchAlgorithmException;
+
+import org.json.JSONObject;
+
 import models.Address;
 import models.Person;
 
@@ -53,6 +57,13 @@ public class User extends Person
 		public Builder(final String forename, final String surname)
 		{
 			super(forename, surname);
+		}
+		
+		public Builder(JSONObject user) throws NoSuchAlgorithmException
+		{
+			super(user.getString("forename"), user.getString("surname"));
+			this.username = user.getString("username");
+			this.digest = Digest.fromPlainText(user.getString("password"));
 		}
 		
 		public Builder address(final Address value)
