@@ -40,7 +40,7 @@ public class UserCache
 	
 	public User getUser (final UUID id)
 	{
-		return this.getUsers(Column.USER_ID, id).get(0);
+		return this.getUsers(Column.USER_ID, id.toString()).get(0);
 	}
 	
 	public User getUser (final String username)
@@ -54,8 +54,8 @@ public class UserCache
 		List<User> foundUsers = null;
 		try
 		{
-			foundUsers = run.query("SELECT * FROM users WHERE ?=?;",
-					new UserResultsSetHandler(), column, columnValue);
+			foundUsers = run.query("SELECT * FROM users WHERE " + column + "=?;",
+					new UserResultsSetHandler(), columnValue);
 		}
 		catch (SQLException e)
 		{

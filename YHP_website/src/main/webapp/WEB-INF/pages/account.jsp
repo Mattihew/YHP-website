@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
+<%@page import="java.util.UUID"%>
+<%@page import="storage.UserCache"%>
+<%@page import="models.user.User"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
@@ -6,6 +9,13 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 		<%@ include file="./includes/bootstrapImports.jspf" %>
 		<title>Account</title>
+		<style>
+			input.text[readonly]
+			{
+				border: none;
+				background-color: white;
+			}
+		</style>
 		<script language="javascript">
 			function sendRequest()
 			{
@@ -44,11 +54,16 @@
 	</head>
 	<body>
 		<div class="container-fluid">
-			<%@ include file="./includes/header.jspf" %>
+			<%@ include file="./includes/header.jspf" %><%
+			final boolean isEditing = "edit".equals(request.getParameter("mode"));
+			final String userID = request.getParameter("user");
+			final User editUser = userID==null ? null : 
+				UserCache.getInstance().getUser(UUID.fromString(userID));
+			%>
 			<div class="col-sm-4 col-sm-offset-4">
 				<form id="userForm" method="post">
 					<div class="form-group">
-						<label>Username: <input type="text" class="form-control" name="username" title="Username"/></label>
+						<label>Username: <input <%=editUser != null ? "value='" + editUser.getForename() + "'" : "" %>type="text" class="form-control<%= isEditing?"":" text" %>" name="username" title="Username" <%= isEditing?"":"readonly='readonly'"%>/></label>
 					</div>
 					<div class="form-group">
 						<label>Password: <input type="password" class="form-control" name="password" title="Password"/></label>
