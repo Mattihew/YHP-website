@@ -17,7 +17,7 @@ public class Digest
 
 	private Digest(final String digestedString)
 	{
-		final String[] sections = digestedString.split("$");
+		final String[] sections = digestedString.split("\\$");
 		this.salt = sections[0];
 		this.iterations = Integer.parseInt(sections[1]);
 		this.encodedValue = sections[2];
