@@ -11,21 +11,23 @@
 		<div class="container-fluid">
 			<%@ include file="./includes/header.jspf" %>
 			<h1>Login</h1>
-			<div class="col-sm-4 col-sm-offset-4">
+			<div class="col-sm-6 col-sm-offset-3">
 				<div class="row">
 					<form id="loginForm" method="post" action="./j_security_check">
-						<div class="form-group">
-							<label for="j_username">Username:</label>
-							<input type="text" class="form-control" id="j_username" name="j_username" placeholder="username" />
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label for="j_username">Username:</label>
+								<input type="text" class="form-control" id="j_username" name="j_username" placeholder="username" />
+							</div>
+							<div class="form-group">
+								<label for="j_password">Password:</label>
+								<input type="password" class="form-control" id="j_password" name="j_password" placeholder="password" />
+							</div>
 						</div>
-						<div class="form-group">
-							<label for="j_password">Password:</label>
-							<input type="password" class="form-control" id="j_password" name="j_password" placeholder="password" />
-						</div>
-						<div class="col-sm-6">
+						<div class="col-xs-6">
 							<button type="submit" class="btn btn-success btn-block">Login</button>
 						</div>
-						<div class="col-sm-6">
+						<div class="col-xs-6">
 							<button type="reset" class="btn btn-danger btn-block">Clear</button>
 						</div>
 					</form>
