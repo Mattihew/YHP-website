@@ -5,6 +5,10 @@
 		<style>
 			.nav
 			{
-				margin:auto;
+				margin: auto;
+			}
+			.glyphicon
+			{
+				width: 1.28571429em;
 			}
 		</style>

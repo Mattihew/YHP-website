@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -40,30 +41,20 @@ public class AccountServlet extends HttpServlet
 	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException
 	{
 		String userid = request.getParameter("user");
-		if (userid != null)
+		if (userid == null)
 		{
-			if (UserRole.ADMIN.isUserinRole(request))
-			{
-				request.getRequestDispatcher("/WEB-INF/pages/account.jsp?user=" + userid).forward(request, response);
-			}
-			else
-			{
-				User user = UserCache.getInstance().getUser(request);
-				if (user.getUuid().toString().equals(userid))
-				{
-					request.getRequestDispatcher("/WEB-INF/pages/account.jsp?user=" + userid).forward(request, response);
-				}
-			}
+			userid = UserCache.getInstance().getUser(request).getUuid().toString();
 		}
-		else
+		else if (!UserRole.ADMIN.isUserinRole(request))
 		{
 			User user = UserCache.getInstance().getUser(request);
-			userid = user.getUuid().toString();
-			request.getRequestDispatcher("/WEB-INF/pages/account.jsp?user=" + userid).forward(request, response);
+			if (!user.getUuid().toString().equals(userid))
+			{
+				//user trying to view other user.
+				response.sendError(403, "Access Denied");
+			}
 		}
-			
-
-		
+		request.getRequestDispatcher("/WEB-INF/pages/account.jsp?user=" + userid).forward(request, response);
 	}
 
 	/**
@@ -75,18 +66,17 @@ public class AccountServlet extends HttpServlet
 	protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException
 	{
 		final JSONObject jsonUser = new JSONObject(req.getParameter("user"));
-		
+		final JSONObject response = new JSONObject();
 		try
 		{
-			System.out.println(new User.Builder(jsonUser).build());
+			UserCache.getInstance().putUser(new User.Builder(jsonUser).build());
 		}
-		catch (NoSuchAlgorithmException e)
+		catch (NoSuchAlgorithmException | SQLException e)
 		{
-			final JSONObject response = new JSONObject();
 			response.put("error", "an error happened");
-			resp.getWriter().write(response.toString());
+			e.printStackTrace();
 		}
-		//add user and edit logic here
+		resp.getWriter().write(response.toString());
 	}
 
 }
