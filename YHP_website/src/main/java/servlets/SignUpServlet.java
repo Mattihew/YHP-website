@@ -29,7 +29,6 @@ public class SignUpServlet extends HttpServlet
 	@Override
 	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException
 	{
-		//request.getRequestDispatcher("SignUp");
-		response.sendError(418, "Teapot not found.");
+		request.getRequestDispatcher("/WEB-INF/pages/account.jsp").forward(request, response);
 	}
 }
