@@ -61,7 +61,7 @@ public class User extends Person
 		
 		public Builder(JSONObject user) throws NoSuchAlgorithmException
 		{
-			super(user.getString("forename"), user.getString("surname"));
+			super(user);
 			this.username = user.getString("username");
 			this.digest = Digest.fromPlainText(user.getString("password"));
 		}
