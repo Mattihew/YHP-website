@@ -55,7 +55,7 @@
 	<body>
 		<div class="container-fluid">
 			<%@ include file="./includes/header.jspf" %><%
-			final boolean isEditing = "edit".equals(request.getParameter("mode"));
+			final boolean isEditing = "edit".equals(request.getAttribute("mode"));
 			final String userID = request.getParameter("user");
 			final User editUser = userID==null ? null : 
 				UserCache.getInstance().getUser(UUID.fromString(userID));
