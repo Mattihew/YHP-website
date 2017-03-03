@@ -1,14 +1,15 @@
 package servlets;
 
 import java.io.IOException;
-import java.security.Principal;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import storage.UserCache;
+import org.json.JSONObject;
+
+import models.user.UserRole;
 
 /**
  * Servlet implementation class AccountServlet
@@ -35,19 +36,12 @@ public class AccountServlet extends HttpServlet
 	@Override
 	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException
 	{
-		final Principal user = request.getUserPrincipal();
-		final UserCache userCache = UserCache.getInstance();
-		
-		if (request.isUserInRole("admin"))
+		if (UserRole.ADMIN.isUserinRole(request))
 		{
-			request.getRequestDispatcher("/WEB-INF/pages/products.jsp").forward(request, response);
-			System.out.println("admin");
+			//request.getRequestDispatcher("/WEB-INF/pages/products.jsp").forward(request, response);
 		}
 		
-		//if user id == parameter id
-		//request.getRequestDispatcher("/").forward(request, response);
-		
-		//request.getRequestDispatcher("/WEB-INF/pages/account.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/pages/account.jsp").forward(request, response);
 	}
 
 	/**
@@ -58,7 +52,14 @@ public class AccountServlet extends HttpServlet
 	@Override
 	protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException
 	{
-		super.doPost(req, resp);
+		final JSONObject jsonUser = new JSONObject(req.getParameter("user"));
+		
+		if (!jsonUser.get("password").equals(jsonUser.get("password2")))
+		{
+			final JSONObject response = new JSONObject();
+			response.put("error", "password mismatch");
+			resp.getWriter().write(response.toString());
+		}
 		
 		//add user and edit logic here
 	}
