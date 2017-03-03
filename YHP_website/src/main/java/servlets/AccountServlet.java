@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+import models.user.User;
 import models.user.UserRole;
 
 /**
@@ -54,13 +56,16 @@ public class AccountServlet extends HttpServlet
 	{
 		final JSONObject jsonUser = new JSONObject(req.getParameter("user"));
 		
-		if (!jsonUser.get("password").equals(jsonUser.get("password2")))
+		try
+		{
+			System.out.println(new User.Builder(jsonUser).build());
+		}
+		catch (NoSuchAlgorithmException e)
 		{
 			final JSONObject response = new JSONObject();
-			response.put("error", "password mismatch");
+			response.put("error", "an error happened");
 			resp.getWriter().write(response.toString());
 		}
-		
 		//add user and edit logic here
 	}
 

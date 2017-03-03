@@ -68,7 +68,7 @@ public class Database
 	{
 		if (this.asqr == null)
 		{
-			this.asqr = new AsyncQueryRunner(this.xs, this.qr);
+			this.asqr = new AsyncQueryRunner(this.xs, this.getQueryRunner());
 		}
 		return this.asqr;
 	}
