@@ -8,13 +8,13 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.apache.catalina.filters.FilterBase;
 import org.apache.juli.logging.Log;
 
 /**
- * Servlet Filter implementation class LoginFilter
+ * Filter to allow logging in from any page.
  */
 public class LoginFilter extends FilterBase
 {
@@ -24,7 +24,7 @@ public class LoginFilter extends FilterBase
      */
     public LoginFilter()
     {
-        // TODO Auto-generated constructor stub
+        super();
     }
 
 	/**
@@ -42,16 +42,26 @@ public class LoginFilter extends FilterBase
 	@Override
 	public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException
 	{
+		ServletRequest newRequest = request;
 		if (request instanceof HttpServletRequest && Boolean.parseBoolean(request.getParameter("auth")))
 		{
 			final HttpServletRequest httpRequest = (HttpServletRequest) request;
-			if (response instanceof HttpServletResponse && httpRequest.getUserPrincipal() == null)
+			if (httpRequest.getUserPrincipal() == null && "POST".equals(httpRequest.getMethod()))
 			{
-				httpRequest.authenticate((HttpServletResponse) response);
-				return;
+				try
+				{
+					httpRequest.login(httpRequest.getParameter("j_username"), httpRequest.getParameter("j_password"));
+					newRequest = new ForceGetWrapper(httpRequest);
+				}
+				catch (ServletException e)
+				{
+					System.err.println(e.getMessage() + " with username: " + httpRequest.getParameter("j_username"));
+					httpRequest.getRequestDispatcher(httpRequest.getContextPath() + "/Login").forward(httpRequest, response);
+					return;
+				}
 			}
 		}
-		chain.doFilter(request, response);
+		chain.doFilter(newRequest, response);
 	}
 
 
@@ -68,5 +78,24 @@ public class LoginFilter extends FilterBase
 	protected Log getLogger()
 	{
 		return null;
+	}
+	
+	/**
+	 * Changes the method of the request to be GET.
+	 * 
+	 * @author Matt Rayner
+	 */
+	private class ForceGetWrapper extends HttpServletRequestWrapper
+	{
+		public ForceGetWrapper(final HttpServletRequest request)
+		{
+			super(request);
+		}
+
+		@Override
+		public String getMethod()
+		{
+			return "GET";
+		}
 	}
 }

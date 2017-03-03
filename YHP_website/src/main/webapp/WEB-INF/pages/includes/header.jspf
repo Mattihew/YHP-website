@@ -38,35 +38,48 @@
 					<%					
 					//Sign up
 					final Principal user = request.getUserPrincipal();
-					final String userLabel;
+					String userLabel = "<span class='glyphicon glyphicon-user'></span> ";
 					if (null == user)
 					{
-						userLabel = "<span class='glyphicon glyphicon-user'></span> Sign Up";
+						userLabel += "Sign Up";
 						%><%=addNavItem(request, userLabel,"/SignUp")%><%
 					}
 					else
 					{
-						userLabel = "<span class='glyphicon glyphicon-user'></span> " + UserCache.getInstance().getUser(user.getName()).getForename();
-						//TODO get user first name from username to display
+						userLabel += UserCache.getInstance().getUser(user.getName()).getForename();
 						%><%=addNavItem(request, userLabel,"/Account")%><%
 					}
 					
 					
 					//Login
-					final String actionLabel;
-					final String[] target;
 					if (null == user)
 					{
-						actionLabel = "<span class='glyphicon glyphicon-log-in'></span> Login";
-						target = new String[]{"?auth=true", "/j_security_check"};
+						%><li><a href="#loginModal" data-toggle="modal"><span class='glyphicon glyphicon-log-in'></span> Login</a></li><%
 					}
 					else
 					{
 						//Logout
-						actionLabel = "<span class='glyphicon glyphicon-log-out'></span> Logout";
-						target = new String[]{"/Logout"};
+						%><%=addNavItem(request, "<span class='glyphicon glyphicon-log-out'></span> Logout", "/Logout")%><%
 					}
 					%>
-					<%=addNavItem(request, actionLabel,target)%>
+					
 				</ul>
 		</header>
+		<div id="loginModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+        				<h4 class="modal-title">Login</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<form id="loginForm" method="post">
+								<input type="hidden" name="auth" value="true" />
+				        	<%@ include file="./loginForm.jspf" %>
+				        	</form>
+			        	</div>
+				    </div>
+				</div>
+			</div>
+		</div>
