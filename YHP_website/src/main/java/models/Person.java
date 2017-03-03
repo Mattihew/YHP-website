@@ -2,6 +2,8 @@ package models;
 
 import java.util.UUID;
 
+import org.json.JSONObject;
+
 public abstract class Person
 {
 	private final UUID id;
@@ -54,6 +56,11 @@ public abstract class Person
 		private UUID id = UUID.randomUUID();
 		private String forename;
 		private String surname;
+		
+		public Builder(final JSONObject person)
+		{
+			this(person.getString("forename"), person.getString("surname"));
+		}
 		
 		public Builder(final String forename, final String surname)
 		{
