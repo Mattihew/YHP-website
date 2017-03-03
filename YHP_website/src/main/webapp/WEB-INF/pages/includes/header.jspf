@@ -37,7 +37,7 @@
 					if (null == user)
 					{
 						userLabel = "<span class='glyphicon glyphicon-user'></span> Sign Up";
-						%><%=addNavItem(userLabel,"/Account",request)%><%
+						%><%=addNavItem(userLabel,"/SignUp",request)%><%
 					}
 					else
 					{

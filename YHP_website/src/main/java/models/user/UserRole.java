@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Matt Rayner
  */
@@ -71,7 +73,7 @@ public enum UserRole
 			//gets the database values from the parent.
 			final Collection<String> parentValues = this.parentRole.toDatabaseValues();
 			final Set<String> result = new LinkedHashSet<>(parentValues.size() + 1);
-			result.add(this.name()); // adds it's own database role.
+			result.add(this.name().toLowerCase()); // adds it's own database role.
 			result.addAll(parentValues); // add parent database roles.
 			this.dbValues = Collections.unmodifiableSet(result);
 		}
@@ -91,6 +93,11 @@ public enum UserRole
 			return this;
 		}
 		return this.parentRole.searchParents(names);
+	}
+	
+	public boolean isUserinRole(final HttpServletRequest request)
+	{
+		return request.isUserInRole(this.name().toLowerCase());
 	}
 	
 	/**

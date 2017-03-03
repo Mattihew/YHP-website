@@ -1,14 +1,17 @@
 package servlets;
 
 import java.io.IOException;
-import java.security.Principal;
+import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import storage.UserCache;
+import org.json.JSONObject;
+
+import models.user.User;
+import models.user.UserRole;
 
 /**
  * Servlet implementation class AccountServlet
@@ -35,19 +38,12 @@ public class AccountServlet extends HttpServlet
 	@Override
 	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException
 	{
-		final Principal user = request.getUserPrincipal();
-		final UserCache userCache = UserCache.getInstance();
-		
-		if (request.isUserInRole("admin"))
+		if (UserRole.ADMIN.isUserinRole(request))
 		{
-			request.getRequestDispatcher("/WEB-INF/pages/products.jsp").forward(request, response);
-			System.out.println("admin");
+			//request.getRequestDispatcher("/WEB-INF/pages/products.jsp").forward(request, response);
 		}
 		
-		//if user id == parameter id
-		//request.getRequestDispatcher("/").forward(request, response);
-		
-		//request.getRequestDispatcher("/WEB-INF/pages/account.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/pages/account.jsp").forward(request, response);
 	}
 
 	/**
@@ -58,8 +54,18 @@ public class AccountServlet extends HttpServlet
 	@Override
 	protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException
 	{
-		super.doPost(req, resp);
+		final JSONObject jsonUser = new JSONObject(req.getParameter("user"));
 		
+		try
+		{
+			System.out.println(new User.Builder(jsonUser).build());
+		}
+		catch (NoSuchAlgorithmException e)
+		{
+			final JSONObject response = new JSONObject();
+			response.put("error", "an error happened");
+			resp.getWriter().write(response.toString());
+		}
 		//add user and edit logic here
 	}
 

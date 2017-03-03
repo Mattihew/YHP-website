@@ -40,7 +40,7 @@ public class UserCache
 	
 	public User getUser (final UUID id)
 	{
-		return this.getUsers(Column.USER_ID, id).get(0);
+		return this.getUsers(Column.USER_ID, id.toString()).get(0);
 	}
 	
 	public User getUser (final String username)
@@ -54,8 +54,8 @@ public class UserCache
 		List<User> foundUsers = null;
 		try
 		{
-			foundUsers = run.query("SELECT * FROM users WHERE ?=?;",
-					new UserResultsSetHandler(), column, columnValue);
+			foundUsers = run.query("SELECT * FROM users WHERE " + column + "=?;",
+					new UserResultsSetHandler(), columnValue);
 		}
 		catch (SQLException e)
 		{
@@ -80,7 +80,7 @@ public class UserCache
 		AsyncQueryRunner run = this.database.getAsyncQueryRunner();
 		run.update("INSERT INTO users (user_id, user_name, user_pass, forename, surname, address_id) VALUES (?,?,?,?,?,?)"
 		+ "ON CONFLICT (user_id) DO UPDATE SET user_name = EXCLUDED.user_name, user_pass=EXCLUDED.user_pass, forename=EXCLUDED.forename, surname=EXCLUDED.surname, address_id=EXCLUDED.address_id;",
-				user.getUuid(), user.getUsername(), user.getDigest(), user.getForename(), user.getSurname(), user.getAddress().getId());
+				user.getUuid(), user.getUsername(), user.getDigest().toString(), user.getForename(), user.getSurname(), user.getAddress().getId());
 		for (final String rolename : user.getRole().toDatabaseValues())
 		{
 			run.update("INSERT INTO user_roles (user_name, role_name) VALUES (?,?) ON CONFLICT (user_name, role_name) DO NOTHING", user.getUsername(), rolename);
@@ -115,7 +115,7 @@ public class UserCache
 			userBuilder.role(UserRole.fromDatabaseValues(roles));
 			userBuilder.id(UUID.fromString(rs.getString(UserCache.Column.USER_ID.toString()))); //convert string to uuid
 			userBuilder.username(rs.getString(UserCache.Column.USER_NAME.toString()));
-			userBuilder.digest(new Digest(rs.getString(UserCache.Column.USER_PASS.toString())));
+			userBuilder.digest(Digest.fromEncrypted(rs.getString(UserCache.Column.USER_PASS.toString())));
 			// userBuilder.address(value); TODO add address getter.
 			return userBuilder.build();
 		}
