@@ -60,10 +60,24 @@
 			final User editUser = userID==null ? null : 
 				UserCache.getInstance().getUser(UUID.fromString(userID));
 			%>
+			<%!
+			private String getUserAttribute(boolean isEditing, String attributeName, String attributeValue)
+			{
+				if (isEditing)
+				{
+					return String.format("<label>%s: <input value='%s' type='text' class='form-control' name='%s' title='%s'", attributeName, attributeValue, attributeName.toLowerCase(), attributeName);
+				}
+				else
+				{
+					return String.format("<label>%s: <input value='%s' type='text' class='form-control text' name='%s' title='%s' readonly='readonly'", attributeName, attributeValue, attributeName.toLowerCase(), attributeName);
+				}
+				
+			}
+			%>
 			<div class="col-sm-4 col-sm-offset-4">
 				<form id="userForm" method="post">
 					<div class="form-group">
-						<label>Username: <input <%=editUser != null ? "value='" + editUser.getForename() + "'" : "" %>type="text" class="form-control<%= isEditing?"":" text" %>" name="username" title="Username" <%= isEditing?"":"readonly='readonly'"%>/></label>
+						<%=getUserAttribute(isEditing, "Username", editUser.getUsername())%>
 					</div>
 					<div class="form-group">
 						<label>Password: <input type="password" class="form-control" name="password" title="Password"/></label>
