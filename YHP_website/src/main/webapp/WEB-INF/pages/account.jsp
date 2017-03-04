@@ -74,25 +74,15 @@
 			<%!
 			private String getUserAttribute(boolean isEditing, String attributeName, String attributeValue)
 			{
-				final String classType = isEditing? "":" text";
-				final String readOnly = isEditing? "":" readonly='readonly'";
-				
-				//Ternary operator didn't seem to like attributeValue == null ? attributeValue : "";
-				if (null == attributeValue)
-				{
-					attributeValue = ""; 
-				}
-				
-				return String.format("<label>%s: <input value='%s' type='text' class='form-control%s' name='%s' title='%s'%s/></label>", 
-						attributeName, attributeValue, classType, attributeName.toLowerCase(), attributeName, readOnly);
+				return getUserAttribute(isEditing, attributeName, attributeValue, null);
 			}
 			
-			private String getUserAttribute(boolean isEditing, String attributeName, String attributeValue, String... type)
+			private String getUserAttribute(boolean isEditing, String attributeName, String attributeValue, String type)
 			{
 				final String classType = isEditing? "":" text";
 				final String readOnly = isEditing? "":" readonly='readonly'";
-				final String inputType = type.length > 0 ? type[0] : "text";
-				final String textType = inputType == "text" ? "value" : "placeholder";
+				final String inputType = type != null ? type : "text";
+				final String textType = inputType != "password" ? "value" : "placeholder";
 				
 				//Ternary operator didn't seem to like attributeValue == null ? attributeValue : "";
 				if (null == attributeValue)
