@@ -72,6 +72,21 @@
 		<div class="container-fluid">
 			<%@ include file="./includes/header.jspf" %>
 			<%!
+			private String getUserAttribute(boolean isEditing, String attributeName, String attributeValue)
+			{
+				final String classType = isEditing? "":" text";
+				final String readOnly = isEditing? "":" readonly='readonly'";
+				
+				//Ternary operator didn't seem to like attributeValue == null ? attributeValue : "";
+				if (null == attributeValue)
+				{
+					attributeValue = ""; 
+				}
+				
+				return String.format("<label>%s: <input value='%s' type='text' class='form-control%s' name='%s' title='%s'%s/></label>", 
+						attributeName, attributeValue, classType, attributeName.toLowerCase(), attributeName, readOnly);
+			}
+			
 			private String getUserAttribute(boolean isEditing, String attributeName, String attributeValue, String... type)
 			{
 				final String classType = isEditing? "":" text";
@@ -85,7 +100,7 @@
 					attributeValue = ""; 
 				}
 				
-				return String.format("<label>%s: <input %s='%s' type='%s' class='form-control%s' name='%s' title='%s'%s", 
+				return String.format("<label>%s: <input %s='%s' type='%s' class='form-control%s' name='%s' title='%s'%s/></label>", 
 						attributeName, textType, attributeValue, inputType, classType, attributeName.toLowerCase(), attributeName, readOnly);
 			}
 			%>
