@@ -65,35 +65,71 @@
 				}
 				xhttp.send('user=' + JSON.stringify(formData));
 			}
+		
 		</script>
 	</head>
 	<body>
 		<div class="container-fluid">
 			<%@ include file="./includes/header.jspf" %>
+			<%!
+			private String getUserAttribute(boolean isEditing, String attributeName, String attributeValue)
+			{
+				return getUserAttribute(isEditing, attributeName, attributeValue, null);
+			}
+			
+			private String getUserAttribute(boolean isEditing, String attributeName, String attributeValue, String type)
+			{
+				final String classType = isEditing? "":" text";
+				final String readOnly = isEditing? "":" readonly='readonly'";
+				final String inputType = type != null ? type : "text";
+				final String textType = inputType != "password" ? "value" : "placeholder";
+				
+				//Ternary operator didn't seem to like attributeValue == null ? attributeValue : "";
+				if (null == attributeValue)
+				{
+					attributeValue = ""; 
+				}
+				
+				return String.format("<label>%s: <input %s='%s' type='%s' class='form-control%s' name='%s' title='%s'%s/></label>", 
+						attributeName, textType, attributeValue, inputType, classType, attributeName.toLowerCase(), attributeName, readOnly);
+			}
+			%>
 			<div class="col-sm-6 col-sm-offset-3">
 				<form id="userForm" method="post">
 					<div class="form-group">
-						<label>Username: <input <%=editUser != null ? "value='" + editUser.getForename() + "'" : "" %>type="text" class="form-control<%= isEditing?"":" text" %>" name="username" title="Username" <%= isEditing?"":"readonly='readonly'"%>/></label>
+						<%=getUserAttribute(isEditing, "Username", editUser==null?null:editUser.getUsername())%>
+					</div>
+					<%	if(isEditing)
+						{
+							%><div class="form-group">
+								<%=getUserAttribute(isEditing, "Password", "User password here", "password")%>
+							</div>
+							<div class="form-group">
+								<%=getUserAttribute(isEditing, "Confirm Password", "User password here", "password")%>
+							</div><%
+						}%>
+					<div class="form-group">
+						<%=getUserAttribute(isEditing, "Forename", editUser==null?null:editUser.getForename())%>
 					</div>
 					<div class="form-group">
-						<label>Password: <input type="password" class="form-control" name="password" title="Password"/></label>
-					</div>
-					<div class="form-group">
-						<label>Confirm Password: <input type="password" class="form-control" name="password2" title="Confirm Password"/></label>
-					</div>
-					<div class="form-group">
-						<label>Forename: <input type="text" class="form-control" name="forename" title="forename"/></label>
-					</div>
-					<div class="form-group">
-						<label>Surname: <input type="text" class="form-control" name="surname" title="surname"/></label>
+						<%=getUserAttribute(isEditing, "Surname", editUser==null?null:editUser.getSurname())%>
 					</div>
 					<fieldset>
 						<legend>Address:</legend>
 						<div class="form-group">
-							<label>Address 1: <input type="text" class="form-control" name="address1" title="address1"/></label>
+							<%=getUserAttribute(isEditing, "Address 1", editUser==null?null:editUser.getAddress().getBuilding())%>
 						</div>
 						<div class="form-group">
-							<label>Address 2: <input type="text" class="form-control" name="address2" title="address2"/></label>
+							<%=getUserAttribute(isEditing, "Address 2", editUser==null?null:editUser.getAddress().getStreet())%>
+						</div>
+						<div class="form-group">
+							<%=getUserAttribute(isEditing, "Address 3", editUser==null?null:editUser.getAddress().getCity_town())%>
+						</div>
+						<div class="form-group">
+							<%=getUserAttribute(isEditing, "Address 4", editUser==null?null:editUser.getAddress().getArea_code())%>
+						</div>
+						<div class="form-group">
+							<%=getUserAttribute(isEditing, "Address 5", editUser==null?null:editUser.getAddress().getCountry())%>
 						</div>
 					</fieldset>
 					<% if (!isEditing) {%>
