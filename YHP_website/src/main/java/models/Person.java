@@ -60,6 +60,7 @@ public abstract class Person
 		public Builder(final JSONObject person)
 		{
 			this(person.getString("forename"), person.getString("surname"));
+			this.id = UUID.fromString(person.getString("userid"));
 		}
 		
 		public Builder(final String forename, final String surname)
