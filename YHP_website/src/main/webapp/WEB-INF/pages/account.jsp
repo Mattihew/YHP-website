@@ -66,10 +66,10 @@
 				final String formType = isEditing? "":" text";
 				final String readOnly = isEditing? "":" readonly='readonly'";
 				
-				//Ternary operator didn't seem to like attributeValue == null ? attributeValue : attributeName;
+				//Ternary operator didn't seem to like attributeValue == null ? attributeValue : "";
 				if (null == attributeValue)
 				{
-					attributeValue = attributeName; 
+					attributeValue = ""; 
 				}
 				
 				return String.format("<label>%s: <input value='%s' type='text' class='form-control%s' name='%s' title='%s'%s", 
