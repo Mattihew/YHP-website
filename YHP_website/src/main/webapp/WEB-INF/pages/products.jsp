@@ -22,25 +22,26 @@
 	<body>
 		<div class="container-fluid">
 			<%@ include file="./includes/header.jspf" %>
+			<% final boolean grid = "grid".equals(request.getParameter("view")); %>
 			<h1>Products</h1>
 			<%for (int i = 0; i < 5; i++) { %>
-			<div class="col-sm-6 col-md-12 product">
-				<div class="col-sm-12 col-md-2">
+			<div class="col-sm-6<%=grid ?"":" col-md-12" %> product">
+				<div class="col-sm-12<%=grid ?"":" col-md-2" %>">
 					<img src="http://placehold.it/300x300?text=<%=i %>" class="img-responsive"></img>
 				</div>
-				<div class="col-sm-8 col-md-2">
+				<div class="col-sm-8<%=grid ?"":" col-md-2" %>">
 					Name
 				</div>
-				<div class="col-sm-4 col-md-push-2 col-md-2">
+				<div class="col-sm-4<%=grid ?"":" col-md-push-2 col-md-2" %>">
 					Quantity: <%=i %>
 				</div>
-				<div class="col-sm-12 col-md-pull-2 col-md-2">
+				<div class="col-sm-12<%=grid ?"":" col-md-pull-2 col-md-2" %>">
 					Description
 				</div>
-				<div class="col-sm-6 col-md-2">
+				<div class="col-sm-6<%=grid ?"":" col-md-2" %>">
 					Price:£<%=i %>.20
 				</div>
-				<div class="col-sm-6 col-md-2">
+				<div class="col-sm-6<%=grid ?"":" col-md-2" %>">
 					<button type="button" class="btn btn-success btn-block">Add to cart<span class="glyphicon glyphicon-shopping-cart" /></button>
 				</div>
 			</div>
