@@ -13,9 +13,21 @@
 			input.text[readonly]
 			{
 				border: none;
-				background-color: white;
+				background-color: inherit;
+				box-shadow: none;
+				color: inherit;
+			}
+			.form-group label
+			{
+				width: 100%;
 			}
 		</style>
+		<%
+			final boolean isEditing = "edit".equals(request.getParameter("mode"));
+			final String userID = request.getParameter("user");
+			final User editUser = userID==null ? null : 
+				UserCache.getInstance().getUser(UUID.fromString(userID));
+		%>
 		<script language="javascript">
 			function sendRequest()
 			{
@@ -54,12 +66,7 @@
 	</head>
 	<body>
 		<div class="container-fluid">
-			<%@ include file="./includes/header.jspf" %><%
-			final boolean isEditing = "edit".equals(request.getAttribute("mode"));
-			final String userID = request.getParameter("user");
-			final User editUser = userID==null ? null : 
-				UserCache.getInstance().getUser(UUID.fromString(userID));
-			%>
+			<%@ include file="./includes/header.jspf" %>
 			<%!
 			private String getUserAttribute(boolean isEditing, String attributeName, String attributeValue)
 			{
@@ -76,7 +83,7 @@
 						attributeName, attributeValue, formType, attributeName.toLowerCase(), attributeName, readOnly);
 			}
 			%>
-			<div class="col-sm-4 col-sm-offset-4">
+			<div class="col-sm-6 col-sm-offset-3">
 				<form id="userForm" method="post">
 					<div class="form-group">
 						<%=getUserAttribute(isEditing, "Username", editUser==null?null:editUser.getUsername())%>
@@ -114,7 +121,13 @@
 							<%=getUserAttribute(isEditing, "Address 5", editUser==null?null:editUser.getAddress().getCountry())%>
 						</div>
 					</fieldset>
+					<% if (!isEditing) {%>
+					<a class="btn btn-warning" href="?mode=edit&user=<%=userID %>">Edit</a>
+					<% } else { %>
 					<button type="button" class="btn btn-success" onclick="sendRequest();">Submit</button>
+					<% if (editUser != null) {%>
+					<a class="btn btn-danger pull-right" href="?user=<%=userID %>">Cancel</a>
+					<% } } %>
 				</form>
 			</div>
 		</div>

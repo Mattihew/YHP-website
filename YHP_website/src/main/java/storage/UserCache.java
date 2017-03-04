@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.dbutils.AsyncQueryRunner;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.AbstractListHandler;
@@ -46,6 +48,11 @@ public class UserCache
 	public User getUser (final String username)
 	{
 		return this.getUsers(Column.USER_NAME, username).get(0);
+	}
+	
+	public User getUser (final HttpServletRequest request)
+	{
+		return this.getUser(request.getUserPrincipal().getName());
 	}
 	
 	private List<User> getUsers(final Column column, final Object columnValue)
