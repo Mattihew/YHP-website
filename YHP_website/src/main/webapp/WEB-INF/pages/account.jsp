@@ -66,6 +66,12 @@
 				final String formType = isEditing? "":" text";
 				final String readOnly = isEditing? "":" readonly='readonly'";
 				
+				//Ternary operator didn't seem to like attributeValue == null ? attributeValue : attributeName;
+				if (null == attributeValue)
+				{
+					attributeValue = attributeName; 
+				}
+				
 				return String.format("<label>%s: <input value='%s' type='text' class='form-control%s' name='%s' title='%s'%s", 
 						attributeName, attributeValue, formType, attributeName.toLowerCase(), attributeName, readOnly);
 			}
@@ -73,7 +79,7 @@
 			<div class="col-sm-4 col-sm-offset-4">
 				<form id="userForm" method="post">
 					<div class="form-group">
-						<%=getUserAttribute(isEditing, "Username", editUser.getUsername())%>
+						<%=getUserAttribute(isEditing, "Username", editUser==null?null:editUser.getUsername())%>
 					</div>
 					<%	if(isEditing)
 						{
@@ -85,27 +91,27 @@
 							</div><%
 						}%>
 					<div class="form-group">
-						<%=getUserAttribute(isEditing, "Forename", editUser.getForename())%>
+						<%=getUserAttribute(isEditing, "Forename", editUser==null?null:editUser.getForename())%>
 					</div>
 					<div class="form-group">
-						<%=getUserAttribute(isEditing, "Surname", editUser.getSurname())%>
+						<%=getUserAttribute(isEditing, "Surname", editUser==null?null:editUser.getSurname())%>
 					</div>
 					<fieldset>
 						<legend>Address:</legend>
 						<div class="form-group">
-							<%=getUserAttribute(isEditing, "Address 1", editUser.getAddress().getBuilding())%>
+							<%=getUserAttribute(isEditing, "Address 1", editUser==null?null:editUser.getAddress().getBuilding())%>
 						</div>
 						<div class="form-group">
-							<%=getUserAttribute(isEditing, "Address 2", editUser.getAddress().getStreet())%>
+							<%=getUserAttribute(isEditing, "Address 2", editUser==null?null:editUser.getAddress().getStreet())%>
 						</div>
 						<div class="form-group">
-							<%=getUserAttribute(isEditing, "Address 3", editUser.getAddress().getCity_town())%>
+							<%=getUserAttribute(isEditing, "Address 3", editUser==null?null:editUser.getAddress().getCity_town())%>
 						</div>
 						<div class="form-group">
-							<%=getUserAttribute(isEditing, "Address 4", editUser.getAddress().getArea_code())%>
+							<%=getUserAttribute(isEditing, "Address 4", editUser==null?null:editUser.getAddress().getArea_code())%>
 						</div>
 						<div class="form-group">
-							<%=getUserAttribute(isEditing, "Address 5", editUser.getAddress().getCountry())%>
+							<%=getUserAttribute(isEditing, "Address 5", editUser==null?null:editUser.getAddress().getCountry())%>
 						</div>
 					</fieldset>
 					<button type="button" class="btn btn-success" onclick="sendRequest();">Submit</button>
