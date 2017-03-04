@@ -53,17 +53,19 @@
 					if (this.readyState == 4 && this.status == 200)
 					{
 						var response = JSON.parse(this.responseText);
-						if (response.error !== null)
+						if (typeof response.error !== 'undefined')
 						{
+							//if the server responseds with a error then display it to the user.
 							alert(response.error);
 						}
 						else
 						{
-							alert("success");
+							//if no error then go to the viewer page.
+							location.assign("./Account?user=" + response.userid);
 						}
 					}
 				}
-				xhttp.send('user=' + JSON.stringify(formData));
+				xhttp.send('newUser=' + JSON.stringify(formData));
 			}
 		
 		</script>
@@ -99,7 +101,7 @@
 					<div class="form-group">
 						<%=getUserAttribute(isEditing, "Username", editUser==null?null:editUser.getUsername())%>
 					</div>
-					<%	if(isEditing)
+					<%	if(editUser == null)
 						{
 							%><div class="form-group">
 								<%=getUserAttribute(isEditing, "Password", "User password here", "password")%>

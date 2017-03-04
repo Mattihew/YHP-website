@@ -47,19 +47,19 @@ public class SignUpServlet extends HttpServlet
 	@Override
 	protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException
 	{
-		final JSONObject jsonUser = new JSONObject(req.getParameter("user"));
-		
+		final JSONObject jsonUser = new JSONObject(req.getParameter("newUser"));
+		final JSONObject response = new JSONObject();
 		try
 		{
-			final User newUser = new User.Builder(jsonUser).build();
+			final User newUser = new User.Builder(jsonUser.getString("forename"), jsonUser.getString("surname")).fromJSON(jsonUser).build();
 			UserCache.getInstance().putUser(newUser);
-			System.out.println(newUser);
-		} catch (NoSuchAlgorithmException | SQLException e)
+			response.put("userid", newUser.getUuid());
+		}
+		catch (NoSuchAlgorithmException | SQLException e)
 		{
 			e.printStackTrace();
-			final JSONObject response = new JSONObject();
 			response.put("error", "an error happend");
-			resp.getWriter().write(response.toString());
 		}
+		resp.getWriter().write(response.toString());
 	}
 }

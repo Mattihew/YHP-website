@@ -1,5 +1,6 @@
 package models;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 import org.json.JSONObject;
@@ -57,15 +58,25 @@ public abstract class Person
 		private String forename;
 		private String surname;
 		
-		public Builder(final JSONObject person)
-		{
-			this(person.getString("forename"), person.getString("surname"));
-		}
-		
 		public Builder(final String forename, final String surname)
 		{
 			this.forename = forename;
 			this.surname = surname;
+		}
+		
+		public Builder fromJSON(final JSONObject person) throws NoSuchAlgorithmException
+		{
+			this.forename = person.getString("forename");
+			this.surname = person.getString("surname");
+			this.id = UUID.fromString(person.getString("userid"));
+			return this;
+		}
+		
+		public Builder(final Person value)
+		{
+			this.id = value.id;
+			this.forename = value.forename;
+			this.surname = value.surname;
 		}
 		
 		public Builder id(final UUID value)
