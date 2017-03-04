@@ -55,11 +55,13 @@
 						var response = JSON.parse(this.responseText);
 						if (typeof response.error !== 'undefined')
 						{
+							//if the server responseds with a error then display it to the user.
 							alert(response.error);
 						}
 						else
 						{
-							location.assign("?user=<%= userID%>");
+							//if no error then go to the viewer page.
+							location.assign("./Account?user=" + response.userid);
 						}
 					}
 				}

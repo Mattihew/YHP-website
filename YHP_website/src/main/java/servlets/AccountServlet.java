@@ -73,7 +73,9 @@ public class AccountServlet extends HttpServlet
 		{
 			final User.Builder builder = new User.Builder(UserCache.getInstance().getUser(UUID.fromString(jsonUser.getString("userid"))));
 			builder.fromJSON(jsonUser);
-			UserCache.getInstance().putUser(builder.build());
+			final User newUser = builder.build();
+			UserCache.getInstance().putUser(newUser);
+			response.put("userid", newUser.getUuid());
 		}
 		catch (NoSuchAlgorithmException | SQLException e)
 		{
