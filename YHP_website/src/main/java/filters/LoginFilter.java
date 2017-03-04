@@ -9,6 +9,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.catalina.filters.FilterBase;
 import org.apache.juli.logging.Log;
@@ -56,7 +57,10 @@ public class LoginFilter extends FilterBase
 				catch (ServletException e)
 				{
 					System.err.println(e.getMessage() + " with username: " + httpRequest.getParameter("j_username"));
-					httpRequest.getRequestDispatcher(httpRequest.getContextPath() + "/Login").forward(httpRequest, response);
+					if (response instanceof HttpServletResponse)
+					{
+						httpRequest.authenticate((HttpServletResponse) response);
+					}
 					return;
 				}
 			}

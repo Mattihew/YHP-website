@@ -8,21 +8,17 @@
 			 * @param address the address to navigate to when clicked.
 			 * @param request used to determin if currently on this page.
 			 */
-			private String addNavItem(final ServletRequest request, final String name, final String... addresses)
+			private String addNavItem(final ServletRequest request, final String name, final String address)
 			{
 				final String uri = (String) request.getAttribute("javax.servlet.forward.request_uri");
 				final String context = ((HttpServletRequest) request).getContextPath();
 				final StringBuilder results = new StringBuilder();
 				results.append("<li");
-				for (String address : addresses)
+				if (uri.equals(context + address))
 				{
-					if (uri.equals(context + address))
-					{
-						results.append(" class=\"active\"");
-						break;
-					}
+					results.append(" class=\"active\"");
 				}
-				results.append("><a href=\"").append(context + addresses[0]).append("\">").append(name).append("</a></li>");
+				results.append("><a href=\"").append(context + address).append("\">").append(name).append("</a></li>");
 				return results.toString();
 			}
 		%>
