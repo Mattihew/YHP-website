@@ -47,7 +47,7 @@ public class SignUpServlet extends HttpServlet
 	@Override
 	protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException
 	{
-		final JSONObject jsonUser = new JSONObject(req.getParameter("user"));
+		final JSONObject jsonUser = new JSONObject(req.getParameter("newUser"));
 		
 		try
 		{

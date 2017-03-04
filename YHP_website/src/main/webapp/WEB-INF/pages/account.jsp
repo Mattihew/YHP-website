@@ -63,7 +63,7 @@
 						}
 					}
 				}
-				xhttp.send('user=' + JSON.stringify(formData));
+				xhttp.send('newUser=' + JSON.stringify(formData));
 			}
 		
 		</script>
@@ -99,7 +99,7 @@
 					<div class="form-group">
 						<%=getUserAttribute(isEditing, "Username", editUser==null?null:editUser.getUsername())%>
 					</div>
-					<%	if(isEditing)
+					<%	if(editUser == null)
 						{
 							%><div class="form-group">
 								<%=getUserAttribute(isEditing, "Password", "User password here", "password")%>
