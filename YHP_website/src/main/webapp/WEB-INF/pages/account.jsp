@@ -53,13 +53,13 @@
 					if (this.readyState == 4 && this.status == 200)
 					{
 						var response = JSON.parse(this.responseText);
-						if (response.error !== null)
+						if (typeof response.error !== 'undefined')
 						{
 							alert(response.error);
 						}
 						else
 						{
-							alert("success");
+							location.assign("?user=<%= userID%>");
 						}
 					}
 				}

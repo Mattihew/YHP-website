@@ -51,7 +51,7 @@ public class SignUpServlet extends HttpServlet
 		
 		try
 		{
-			final User newUser = new User.Builder(jsonUser).build();
+			final User newUser = new User.Builder(jsonUser.getString("forename"), jsonUser.getString("surname")).fromJSON(jsonUser).build();
 			UserCache.getInstance().putUser(newUser);
 			System.out.println(newUser);
 		} catch (NoSuchAlgorithmException | SQLException e)

@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -52,6 +53,7 @@ public class AccountServlet extends HttpServlet
 			{
 				//user trying to view other user.
 				response.sendError(403, "Access Denied");
+				return;
 			}
 		}
 		request.getRequestDispatcher("/WEB-INF/pages/account.jsp?user=" + userid).forward(request, response);
@@ -69,7 +71,9 @@ public class AccountServlet extends HttpServlet
 		final JSONObject response = new JSONObject();
 		try
 		{
-			UserCache.getInstance().putUser(new User.Builder(jsonUser).build());
+			final User.Builder builder = new User.Builder(UserCache.getInstance().getUser(UUID.fromString(jsonUser.getString("userid"))));
+			builder.fromJSON(jsonUser);
+			UserCache.getInstance().putUser(builder.build());
 		}
 		catch (NoSuchAlgorithmException | SQLException e)
 		{

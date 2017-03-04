@@ -59,11 +59,26 @@ public class User extends Person
 			super(forename, surname);
 		}
 		
-		public Builder(JSONObject user) throws NoSuchAlgorithmException
+		@Override
+		public Builder fromJSON(final JSONObject user) throws NoSuchAlgorithmException
 		{
-			super(user);
+			super.fromJSON(user);
 			this.username = user.getString("username");
-			this.digest = Digest.fromPlainText(user.getString("password"));
+			if (user.has("password"))
+			{
+				this.digest = Digest.fromPlainText(user.getString("password"));
+			}
+			//this.address = TODO
+			return this;
+		}
+		
+		public Builder(final User value)
+		{
+			super(value);
+			this.address = value.address;
+			this.digest = value.digest;
+			this.username = value.username;
+			this.role = value.role;
 		}
 		
 		public Builder address(final Address value)
