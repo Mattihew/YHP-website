@@ -63,15 +63,11 @@
 			<%!
 			private String getUserAttribute(boolean isEditing, String attributeName, String attributeValue)
 			{
-				if (isEditing)
-				{
-					return String.format("<label>%s: <input value='%s' type='text' class='form-control' name='%s' title='%s'", attributeName, attributeValue, attributeName.toLowerCase(), attributeName);
-				}
-				else
-				{
-					return String.format("<label>%s: <input value='%s' type='text' class='form-control text' name='%s' title='%s' readonly='readonly'", attributeName, attributeValue, attributeName.toLowerCase(), attributeName);
-				}
+				final String formType = isEditing? "":" text";
+				final String readOnly = isEditing? "":" readonly='readonly'";
 				
+				return String.format("<label>%s: <input value='%s' type='text' class='form-control%s' name='%s' title='%s'%s", 
+						attributeName, attributeValue, formType, attributeName.toLowerCase(), attributeName, readOnly);
 			}
 			%>
 			<div class="col-sm-4 col-sm-offset-4">
@@ -79,25 +75,37 @@
 					<div class="form-group">
 						<%=getUserAttribute(isEditing, "Username", editUser.getUsername())%>
 					</div>
+					<%	if(isEditing)
+						{
+							%><div class="form-group">
+								<%=getUserAttribute(isEditing, "Password", "User password here")%>
+							</div>
+							<div class="form-group">
+								<%=getUserAttribute(isEditing, "Confirm Password", "User password here")%>
+							</div><%
+						}%>
 					<div class="form-group">
-						<label>Password: <input type="password" class="form-control" name="password" title="Password"/></label>
+						<%=getUserAttribute(isEditing, "Forename", editUser.getForename())%>
 					</div>
 					<div class="form-group">
-						<label>Confirm Password: <input type="password" class="form-control" name="password2" title="Confirm Password"/></label>
-					</div>
-					<div class="form-group">
-						<label>Forename: <input type="text" class="form-control" name="forename" title="forename"/></label>
-					</div>
-					<div class="form-group">
-						<label>Surname: <input type="text" class="form-control" name="surname" title="surname"/></label>
+						<%=getUserAttribute(isEditing, "Surname", editUser.getSurname())%>
 					</div>
 					<fieldset>
 						<legend>Address:</legend>
 						<div class="form-group">
-							<label>Address 1: <input type="text" class="form-control" name="address1" title="address1"/></label>
+							<%=getUserAttribute(isEditing, "Address 1", editUser.getAddress().getBuilding())%>
 						</div>
 						<div class="form-group">
-							<label>Address 2: <input type="text" class="form-control" name="address2" title="address2"/></label>
+							<%=getUserAttribute(isEditing, "Address 2", editUser.getAddress().getStreet())%>
+						</div>
+						<div class="form-group">
+							<%=getUserAttribute(isEditing, "Address 3", editUser.getAddress().getCity_town())%>
+						</div>
+						<div class="form-group">
+							<%=getUserAttribute(isEditing, "Address 4", editUser.getAddress().getArea_code())%>
+						</div>
+						<div class="form-group">
+							<%=getUserAttribute(isEditing, "Address 5", editUser.getAddress().getCountry())%>
 						</div>
 					</fieldset>
 					<button type="button" class="btn btn-success" onclick="sendRequest();">Submit</button>
