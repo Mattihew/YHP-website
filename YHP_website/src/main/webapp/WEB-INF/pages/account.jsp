@@ -31,7 +31,7 @@
 		<script language="javascript">
 			function sendRequest()
 			{
-				var formData = {};
+				var formData = {userid:'<%= userID%>'};
 				var inputs = document.getElementById('userForm').getElementsByTagName('input');
 				for (var i = 0; i < inputs.length; i++)
 				{
@@ -57,6 +57,10 @@
 						{
 							alert(response.error);
 						}
+						else
+						{
+							alert("success");
+						}
 					}
 				}
 				xhttp.send('user=' + JSON.stringify(formData));
@@ -68,10 +72,12 @@
 		<div class="container-fluid">
 			<%@ include file="./includes/header.jspf" %>
 			<%!
-			private String getUserAttribute(boolean isEditing, String attributeName, String attributeValue)
+			private String getUserAttribute(boolean isEditing, String attributeName, String attributeValue, String... type)
 			{
-				final String formType = isEditing? "":" text";
+				final String classType = isEditing? "":" text";
 				final String readOnly = isEditing? "":" readonly='readonly'";
+				final String inputType = type.length > 0 ? type[0] : "text";
+				final String textType = inputType == "text" ? "value" : "placeholder";
 				
 				//Ternary operator didn't seem to like attributeValue == null ? attributeValue : "";
 				if (null == attributeValue)
@@ -79,8 +85,8 @@
 					attributeValue = ""; 
 				}
 				
-				return String.format("<label>%s: <input value='%s' type='text' class='form-control%s' name='%s' title='%s'%s", 
-						attributeName, attributeValue, formType, attributeName.toLowerCase(), attributeName, readOnly);
+				return String.format("<label>%s: <input %s='%s' type='%s' class='form-control%s' name='%s' title='%s'%s", 
+						attributeName, textType, attributeValue, inputType, classType, attributeName.toLowerCase(), attributeName, readOnly);
 			}
 			%>
 			<div class="col-sm-6 col-sm-offset-3">
@@ -91,10 +97,10 @@
 					<%	if(isEditing)
 						{
 							%><div class="form-group">
-								<%=getUserAttribute(isEditing, "Password", "User password here")%>
+								<%=getUserAttribute(isEditing, "Password", "User password here", "password")%>
 							</div>
 							<div class="form-group">
-								<%=getUserAttribute(isEditing, "Confirm Password", "User password here")%>
+								<%=getUserAttribute(isEditing, "Confirm Password", "User password here", "password")%>
 							</div><%
 						}%>
 					<div class="form-group">
