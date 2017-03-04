@@ -36,8 +36,7 @@ public class SignUpServlet extends HttpServlet
 	@Override
 	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException
 	{
-		request.setAttribute("mode", "edit");
-		request.getRequestDispatcher("/WEB-INF/pages/account.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/pages/account.jsp?mode=edit").forward(request, response);
 	}
 	
 	/**
