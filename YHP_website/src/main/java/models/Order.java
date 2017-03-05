@@ -5,7 +5,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import models.user.User;
+import storage.UserCache;
 
 /**
  * @author Matt Rayner
@@ -16,6 +20,7 @@ public class Order
 	private final Map<Product, Integer> products;
 	private final User user;
 	private final Address address;
+	private final boolean inProgress;
 	
 	/**
 	 * Class Constructor.
@@ -24,7 +29,7 @@ public class Order
 	 */
 	private Order(final Builder builder)
 	{
-		this(builder.id, builder.products, builder.user, builder.address);
+		this(builder.id, builder.products, builder.user, builder.address, builder.inProgress);
 	}
 	
 	/**
@@ -34,14 +39,41 @@ public class Order
 	 * @param products
 	 * @param user
 	 * @param address
+	 * @param inProgress
 	 */
-	public Order(final UUID id, final Map<Product, Integer> products, final User user, final Address address)
+	public Order(final UUID id, final Map<Product, Integer> products, final User user, final Address address, final boolean inProgress)
 	{
 		super();
 		this.id = (null != id ? id : UUID.randomUUID());
 		this.products = new LinkedHashMap<>(products);
 		this.user = user;
-		this.address = address;
+		this.address = (null != address ? address : user.getAddress());
+		this.inProgress = inProgress;
+	}
+	
+	/**
+	 * Gets a order that is linked with the session. if none exist then one is created.
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public static Order fromRequest(final HttpServletRequest request)
+	{
+		final HttpSession session = request.getSession(false);
+		Order currentOrder = null;
+		if (null != session)
+		{
+			currentOrder = (Order) session.getAttribute("currentOrder");
+		}
+		if (null == currentOrder)
+		{
+			currentOrder = new Order.Builder().user(UserCache.getInstance().getUser(request)).build();
+			if (null != session)
+			{
+				session.setAttribute("currentOrder", currentOrder);
+			}
+		}
+		return currentOrder;
 	}
 
 	/**
@@ -85,6 +117,7 @@ public class Order
 		private final Map<Product, Integer> products = new LinkedHashMap<>();
 		private User user;
 		private Address address;
+		private boolean inProgress;
 		
 		/**
 		 * Class Constructor.
@@ -145,6 +178,16 @@ public class Order
 		public Builder address(final Address value)
 		{
 			this.address = value;
+			return this;
+		}
+		
+		/**
+		 * @param value is this order still in progress
+		 * @return this Builder
+		 */
+		public Builder inProgress(final boolean value)
+		{
+			this.inProgress = value;
 			return this;
 		}
 		
