@@ -56,9 +56,16 @@ public class ProductCache
 		List<Product> foundProducts = null;
 		try
 		{
-			final String constraint = null==column?"":" WHERE " + column + "=?";
-			foundProducts = queryRunner.query("SELECT * FROM products" + constraint + ";",
-					new ProductResultsSetHandler(), columnValue);
+			if (null == column)
+			{
+				foundProducts = queryRunner.query("SELECT * FROM products;", new ProductResultsSetHandler());
+			}
+			else
+			{
+				foundProducts = queryRunner.query("SELECT * FROM products WHERE " + column + "=?;",
+						new ProductResultsSetHandler(), columnValue);
+			}
+			
 		}
 		catch (SQLException e)
 		{
