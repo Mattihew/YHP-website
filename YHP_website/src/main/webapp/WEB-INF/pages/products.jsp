@@ -13,11 +13,18 @@
 				margin: 1em 0px;
 				padding: 1em 0px;
 			}
-			.product div
-			{
-				
-			}
 		</style>
+		<script src="/js/xhttp.js"></script>
+		<script>
+			function addToOrder(id)
+			{
+				xhttp.sendRequest(id, responseHandler, '/AddProductToOrder');
+			}
+			function responseHandler(responseText)
+			{
+				alert(responseText);
+			}
+		</script>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -42,7 +49,7 @@
 					Price:£<%=i %>.20
 				</div>
 				<div class="col-sm-6<%=grid ?"":" col-md-2" %>">
-					<button type="button" class="btn btn-success btn-block">Add to cart<span class="glyphicon glyphicon-shopping-cart" /></button>
+					<button type="button" class="btn btn-success btn-block" onclick="addToOrder(<%= i%>)">Add to cart<span class="glyphicon glyphicon-shopping-cart" /></button>
 				</div>
 			</div>
 			<% } %>

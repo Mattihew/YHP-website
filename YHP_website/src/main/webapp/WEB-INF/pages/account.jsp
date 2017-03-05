@@ -28,8 +28,9 @@
 			final User editUser = userID==null ? null : 
 				UserCache.getInstance().getUser(UUID.fromString(userID));
 		%>
+		<script src="/js/xhttp.js"></script>
 		<script language="javascript">
-			function sendRequest()
+			function sendUser()
 			{
 				var formData = {userid:'<%= userID%>'};
 				var inputs = document.getElementById('userForm').getElementsByTagName('input');
@@ -37,35 +38,20 @@
 				{
 					formData[inputs[i].name] = inputs[i].value;
 				}
-				var xhttp;
-				if (window.XMLHttpRequest)
+				xhttp.sendRequest('newUser=' + JSON.stringify(formData), function(responseText)
 				{
-					xhttp = new XMLHttpRequest();
-				}
-				else
-				{
-					xhttp = new ActiveXObject('Microsoft.XMLHTTP');
-				}
-				xhttp.open('POST', '', true);
-				xhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-				xhttp.onreadystatechange = function()
-				{
-					if (this.readyState == 4 && this.status == 200)
+					var response = JSON.parse(responseText);
+					if (typeof response.error !== 'undefined')
 					{
-						var response = JSON.parse(this.responseText);
-						if (typeof response.error !== 'undefined')
-						{
-							//if the server responseds with a error then display it to the user.
-							alert(response.error);
-						}
-						else
-						{
-							//if no error then go to the viewer page.
-							location.assign("./Account?user=" + response.userid);
-						}
+						//if the server responseds with a error then display it to the user.
+						alert(response.error);
 					}
-				}
-				xhttp.send('newUser=' + JSON.stringify(formData));
+					else
+					{
+						//if no error then go to the viewer page.
+						location.assign("./Account?user=" + response.userid);
+					}
+				});
 			}
 		
 		</script>
@@ -137,7 +123,7 @@
 					<% if (!isEditing) {%>
 					<a class="btn btn-warning" href="?mode=edit&user=<%=userID %>">Edit</a>
 					<% } else { %>
-					<button type="button" class="btn btn-success" onclick="sendRequest();">Submit</button>
+					<button type="button" class="btn btn-success" onclick="sendUser();">Submit</button>
 					<% if (editUser != null) {%>
 					<a class="btn btn-danger pull-right" href="?user=<%=userID %>">Cancel</a>
 					<% } } %>
