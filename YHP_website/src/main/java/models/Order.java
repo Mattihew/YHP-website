@@ -47,7 +47,7 @@ public class Order
 		this.id = (null != id ? id : UUID.randomUUID());
 		this.products = new LinkedHashMap<>(products);
 		this.user = user;
-		this.address = (null != address ? address : user.getAddress());
+		this.address = (null != address ? address : (null != user ? user.getAddress() : null));
 		this.inProgress = inProgress;
 	}
 	
@@ -125,7 +125,7 @@ public class Order
 		private final Map<Product, Integer> products = new LinkedHashMap<>();
 		private User user;
 		private Address address;
-		private boolean inProgress;
+		private boolean inProgress = true;
 		
 		/**
 		 * Class Constructor.

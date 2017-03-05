@@ -32,7 +32,7 @@ public class RemoveProductFromOrderServlet extends HttpServlet
 	@Override
 	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException
 	{
-		super.doPost(request, response);
+		response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED);
 	}
 
 }
