@@ -1,7 +1,11 @@
 package models;
 
+import java.util.UUID;
+
 public class Product
 {
+	private final UUID id;
+	
 	private final String name;
 	
 	private final String desc;
@@ -16,15 +20,21 @@ public class Product
 	/**
 	 * Class Constructor.
 	 */
-	public Product(final String name, final String desc, final String type, final int price, final int quantity, final String imageURL)
+	public Product(final UUID id, final String name, final String desc, final String type, final int price, final int quantity, final String imageURL)
 	{
 		super();
+		this.id = id;
 		this.name = name;
 		this.desc = desc;
 		this.type = type;
 		this.price = price;
 		this.quantity = quantity;
 		this.imageURL = imageURL;
+	}
+	
+	public UUID getId()
+	{
+		return this.id;
 	}
 	/**
 	 * @return the name

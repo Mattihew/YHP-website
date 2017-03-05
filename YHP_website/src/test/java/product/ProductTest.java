@@ -12,7 +12,7 @@ public class ProductTest
 	@Test
 	public void testGetPriceString()
 	{
-		final Product product = new Product(null, null, null, 220, 0, null);
+		final Product product = new Product(null, null, null, null, 220, 0, null);
 		Assert.assertThat(product.getPriceString(), new IsEqual<String>("£2.20"));
 	}
 
