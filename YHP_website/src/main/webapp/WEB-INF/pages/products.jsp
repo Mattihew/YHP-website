@@ -20,7 +20,7 @@
 		<script>
 			function addToOrder(id)
 			{
-				xhttp.sendRequest(id, responseHandler, '/AddProductToOrder');
+				xhttp.sendRequest("productid=" + id, responseHandler, '/AddProductToOrder');
 			}
 			function responseHandler(responseText)
 			{
@@ -51,7 +51,7 @@
 					Price: <%=product.getPriceString() %>
 				</div>
 				<div class="col-sm-6<%=grid ?"":" col-md-2" %>">
-					<button type="button" class="btn btn-success btn-block" onclick="addToOrder(<%=product.getId() %>)">Add to cart<span class="glyphicon glyphicon-shopping-cart" /></button>
+					<button type="button" class="btn btn-success btn-block" onclick="addToOrder('<%=product.getId() %>');">Add to cart<span class="glyphicon glyphicon-shopping-cart" /></button>
 				</div>
 			</div>
 			<% } %>
