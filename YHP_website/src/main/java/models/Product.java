@@ -5,18 +5,13 @@ import java.util.UUID;
 public class Product
 {
 	private final UUID id;
-	
 	private final String name;
-	
 	private final String desc;
-	
 	private final String type;
-	
 	private final int price;
-	
 	private final int quantity;
-	
 	private final String imageURL;
+	
 	/**
 	 * Class Constructor.
 	 */
@@ -32,39 +27,48 @@ public class Product
 		this.imageURL = imageURL;
 	}
 	
+	/**
+	 * @return the UUID of this product
+	 */
 	public UUID getId()
 	{
 		return this.id;
 	}
 	/**
-	 * @return the name
+	 * @return the name of this product
 	 */
 	public String getName()
 	{
 		return this.name;
 	}
 	/**
-	 * @return the desc
+	 * @return the description of this product
 	 */
 	public String getDescription()
 	{
 		return this.desc;
 	}
 	/**
-	 * @return the type
+	 * @return the type of this product
 	 */
 	public String getType()
 	{
 		return this.type;
 	}
 	/**
-	 * @return the price
+	 * @return the price of this product as an integer of pennys.
 	 */
 	public int getPricePennys()
 	{
 		return this.price;
 	}
 	
+	/**
+	 * returns the price in the correct format depending on if the price is greater than 100 pennys. <br />
+	 * e.g. price of 20 returns <tt>20p</tt> and price of 220 returns <tt>£2.20</tt>.
+	 * 
+	 * @return the price of this product as a String
+	 */
 	public String getPriceString()
 	{
 		String result = Integer.toString(this.price);
@@ -79,14 +83,14 @@ public class Product
 		return result;
 	}
 	/**
-	 * @return the quantity
+	 * @return the quantity of this product
 	 */
 	public int getQuantity()
 	{
 		return this.quantity;
 	}
 	/**
-	 * @return the imageURL
+	 * @return the URL of an image of this product
 	 */
 	public String getImageURL()
 	{
