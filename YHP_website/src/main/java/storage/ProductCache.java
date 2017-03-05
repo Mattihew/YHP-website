@@ -81,9 +81,14 @@ public class ProductCache
 	{
 		private ResultSet rs;
 		
-		private String getValue(final Column column) throws SQLException
+		private String getStringValue(final Column column) throws SQLException
 		{
 			return this.rs.getString(column.toString());
+		}
+		
+		private int getIntValue(final Column column) throws SQLException
+		{
+			return this.rs.getInt(column.toString());
 		}
 
 		@Override
@@ -92,13 +97,13 @@ public class ProductCache
 			this.rs = rs;
 			
 			return new Product(
-					UUID.fromString(this.getValue(Column.PRODUCT_ID)),
-					this.getValue(Column.NAME),
-					this.getValue(Column.DESCRIPTION), 
-					this.getValue(Column.TYPE),
-					Integer.parseInt(this.getValue(Column.PRICE)),
-					Integer.parseInt(this.getValue(Column.QUANTITY)),
-					this.getValue(Column.IMAGE_URL));
+					UUID.fromString(this.getStringValue(Column.PRODUCT_ID)),
+					this.getStringValue(Column.NAME),
+					this.getStringValue(Column.DESCRIPTION), 
+					this.getStringValue(Column.TYPE),
+					this.getIntValue(Column.PRICE),
+					this.getIntValue(Column.QUANTITY),
+					this.getStringValue(Column.IMAGE_URL));
 		}
 	}
 
