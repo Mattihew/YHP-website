@@ -36,7 +36,7 @@
 				var inputs = document.getElementById('userForm').getElementsByTagName('input');
 				for (var i = 0; i < inputs.length; i++)
 				{
-					formData[inputs[i].name] = inputs[i].value;
+					formData[inputs[i].name] = encodeURIComponent(inputs[i].value);
 				}
 				xhttp.sendRequest('newUser=' + JSON.stringify(formData), function(responseText)
 				{
@@ -123,7 +123,7 @@
 					<% if (!isEditing) {%>
 					<a class="btn btn-warning" href="?mode=edit&user=<%=userID %>">Edit</a>
 					<% } else { %>
-					<button type="button" class="btn btn-success" onclick="sendUser();">Submit</button>
+					<button type="submit" class="btn btn-success" onclick="sendUser();">Submit</button>
 					<% if (editUser != null) {%>
 					<a class="btn btn-danger pull-right" href="?user=<%=userID %>">Cancel</a>
 					<% } } %>
