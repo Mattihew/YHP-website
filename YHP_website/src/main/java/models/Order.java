@@ -109,6 +109,14 @@ public class Order
 	}
 	
 	/**
+	 * @return <tt>true</tt> if the order is still in progress.
+	 */
+	public boolean isInProgress()
+	{
+		return this.inProgress;
+	}
+	
+	/**
 	 * @author Matt Rayner
 	 */
 	public static class Builder
