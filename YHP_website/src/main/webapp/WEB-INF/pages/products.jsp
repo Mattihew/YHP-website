@@ -15,6 +15,14 @@
 				margin: 1em 0px;
 				padding: 1em 0px;
 			}
+			@media (min-width: 992px)
+			{
+				.product
+				{
+					display: flex;
+					align-items: center;
+				}
+			}
 		</style>
 		<script src="/js/xhttp.js"></script>
 		<script>
