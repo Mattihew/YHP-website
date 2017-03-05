@@ -21,7 +21,12 @@ public class ProductCache
 
 	public static ProductCache getInstance()
 	{
-		return INSTANCE == null ? new ProductCache(Database.getInstance()) : INSTANCE;
+		if (null == ProductCache.INSTANCE)
+		{
+			ProductCache.INSTANCE = new ProductCache(Database.getInstance());
+		}
+		
+		return ProductCache.INSTANCE;
 	}
 
 	private ProductCache(Database database)
