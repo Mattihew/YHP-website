@@ -17,7 +17,7 @@ import org.apache.commons.dbutils.QueryRunner;
  */
 public class Database
 {
-	private static Database INSTATANCE;
+	private static Database INSTANCE;
 	
 	private final DataSource ds;
 	
@@ -29,18 +29,18 @@ public class Database
 	
 	public static Database getInstance()
 	{
-		if (Database.INSTATANCE == null)
+		if (Database.INSTANCE == null)
 		{
 			try
 			{
-				Database.INSTATANCE = new Database();
+				Database.INSTANCE = new Database();
 			}
 			catch (NamingException e)
 			{
 				e.printStackTrace();
 			}
 		}
-		return Database.INSTATANCE;
+		return Database.INSTANCE;
 	}
 	
 	/**
