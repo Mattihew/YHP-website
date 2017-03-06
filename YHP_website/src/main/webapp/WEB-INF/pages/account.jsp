@@ -28,7 +28,7 @@
 			final User editUser = userID==null ? null : 
 				UserCache.getInstance().getUser(UUID.fromString(userID));
 		%>
-		<script src="/js/xhttp.js"></script>
+		<script src="./js/xhttp.js"></script>
 		<script language="javascript">
 			function sendUser()
 			{
