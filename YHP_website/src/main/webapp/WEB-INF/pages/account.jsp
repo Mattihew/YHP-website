@@ -32,7 +32,7 @@
 		<script language="javascript">
 			function sendUser()
 			{
-				var formData = {userid:'<%= userID%>'};
+				var formData = {<%if (userID != null){ %>userid:'<%= userID%>'<%}%>};
 				var inputs = document.getElementById('userForm').getElementsByTagName('input');
 				for (var i = 0; i < inputs.length; i++)
 				{
@@ -123,7 +123,7 @@
 					<% if (!isEditing) {%>
 					<a class="btn btn-warning" href="?mode=edit&user=<%=userID %>">Edit</a>
 					<% } else { %>
-					<button type="submit" class="btn btn-success" onclick="sendUser();">Submit</button>
+					<button type="button" class="btn btn-success" onclick="sendUser();">Submit</button>
 					<% if (editUser != null) {%>
 					<a class="btn btn-danger pull-right" href="?user=<%=userID %>">Cancel</a>
 					<% } } %>
