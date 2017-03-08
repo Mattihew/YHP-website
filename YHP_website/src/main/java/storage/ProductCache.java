@@ -2,6 +2,7 @@ package storage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,7 +30,7 @@ public class ProductCache
 		return ProductCache.INSTANCE;
 	}
 
-	private ProductCache(Database database)
+	private ProductCache(final Database database)
 	{
 		this.database = database;
 	}
@@ -43,25 +44,37 @@ public class ProductCache
 	{
 		return this.getProducts(Column.NAME, productName).get(0);
 	}
+	
+	public List<Product> getProducts()
+	{
+		return this.getProducts(null, null);
+	}
 
 	private List<Product> getProducts(final Column column, final Object columnValue)
 	{
 		QueryRunner queryRunner = this.database.getQueryRunner();
 		List<Product> foundProducts = null;
-		
 		try
 		{
-			foundProducts = queryRunner.query("SELECT * FROM products WHERE " + column + "=?;",
-					new ProductResultsSetHandler(), columnValue);
+			if (null == column)
+			{
+				foundProducts = queryRunner.query("SELECT * FROM products;", new ProductResultsSetHandler());
+			}
+			else
+			{
+				foundProducts = queryRunner.query("SELECT * FROM products WHERE " + column + "=?;",
+						new ProductResultsSetHandler(), columnValue);
+			}
+			
 		}
 		catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
 		
-		if (null == foundProducts || foundProducts.isEmpty())
+		if (null == foundProducts)
 		{
-			return null;
+			return Collections.emptyList();
 		}
 		
 		this.products.addAll(foundProducts);
@@ -99,7 +112,7 @@ public class ProductCache
 			return new Product(
 					UUID.fromString(this.getStringValue(Column.PRODUCT_ID)),
 					this.getStringValue(Column.NAME),
-					this.getStringValue(Column.DESCRIPTION), 
+					this.getStringValue(Column.DESCRIPTION),
 					this.getStringValue(Column.TYPE),
 					this.getIntValue(Column.PRICE),
 					this.getIntValue(Column.QUANTITY),
