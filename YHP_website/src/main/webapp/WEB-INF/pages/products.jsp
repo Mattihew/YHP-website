@@ -14,7 +14,7 @@
 				padding: 1em 0px;
 			}
 		</style>
-		<script src="/js/xhttp.js"></script>
+		<script src="./js/xhttp.js"></script>
 		<script>
 			function addToOrder(id)
 			{

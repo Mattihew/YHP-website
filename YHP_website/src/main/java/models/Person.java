@@ -68,7 +68,11 @@ public abstract class Person
 		{
 			this.forename = person.getString("forename");
 			this.surname = person.getString("surname");
-			this.id = UUID.fromString(person.getString("userid"));
+			final String idString = person.optString("userid", null);
+			if (null != idString)
+			{
+				this.id = UUID.fromString(idString);
+			}
 			return this;
 		}
 		
