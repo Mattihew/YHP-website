@@ -42,23 +42,23 @@
 			<% final boolean grid = "grid".equals(request.getParameter("view")); %>
 			<h1>Products</h1>
 			<%for (Product product : ProductCache.getInstance().getProducts()) { %>
-			<div class="col-sm-6<%=grid ?"":" col-md-12" %> product">
-				<div class="col-sm-12<%=grid ?"":" col-md-2" %>">
+			<div class="col-sm-6<%=grid ?"":" col-md-4" %> product">
+				<div class="col-sm-12<%=grid ?"":" panel-body" %>">
 					<img src="http://placehold.it/300x300?text=<%=product.getName() %>" class="img-responsive"></img>
 				</div>
-				<div class="col-sm-8<%=grid ?"":" col-md-2" %>">
+				<div class="col-sm-8<%=grid ?"":" panel-heading" %>">
 					<%=product.getName() %>
 				</div>
-				<div class="col-sm-4<%=grid ?"":" col-md-push-2 col-md-2" %>">
+				<div class="col-sm-4<%=grid ?"":" panel-body" %>">
 					Quantity: <%=product.getQuantity() %>
 				</div>
-				<div class="col-sm-12<%=grid ?"":" col-md-pull-2 col-md-2" %>">
+				<div class="col-sm-12<%=grid ?"":" panel-body" %>">
 					<%=product.getDescription() %>
 				</div>
-				<div class="col-sm-6<%=grid ?"":" col-md-2" %>">
+				<div class="col-sm-6<%=grid ?"":" panel-body" %>">
 					Price: <%=product.getPriceString() %>
 				</div>
-				<div class="col-sm-6<%=grid ?"":" col-md-2" %>">
+				<div class="col-sm-6<%=grid ?"":" panel-footer" %>">
 					<button type="button" class="btn btn-success btn-block" onclick="addToOrder('<%=product.getId() %>');">Add to cart<span class="glyphicon glyphicon-shopping-cart" /></button>
 				</div>
 			</div>
