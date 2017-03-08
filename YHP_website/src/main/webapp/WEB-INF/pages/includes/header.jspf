@@ -24,42 +24,49 @@
 		%>
 		<header class="navbar navbar-default">
 				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span> 
+				    </button>
 					<a class="navbar-brand" href="<%=((HttpServletRequest) request).getContextPath()%>/">Yeovil Healthcare Products</a>
 				</div>
-				<ul class="nav navbar-nav">
-					<%=addNavItem(request, "Products", "/") %>
-					<%=addNavItem(request, "Order", "/Order") %>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<%					
-					//Sign up
-					final Principal user = request.getUserPrincipal();
-					String userLabel = "<span class='glyphicon glyphicon-user'></span> ";
-					if (null == user)
-					{
-						userLabel += "Sign Up";
-						%><%=addNavItem(request, userLabel,"/SignUp")%><%
-					}
-					else
-					{
-						userLabel += UserCache.getInstance().getUser(user.getName()).getForename();
-						%><%=addNavItem(request, userLabel,"/Account")%><%
-					}
-					
-					
-					//Login
-					if (null == user)
-					{
-						%><li><a href="#loginModal" data-toggle="modal"><span class='glyphicon glyphicon-log-in'></span> Login</a></li><%
-					}
-					else
-					{
-						//Logout
-						%><%=addNavItem(request, "<span class='glyphicon glyphicon-log-out'></span> Logout", "/Logout")%><%
-					}
-					%>
-					
-				</ul>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav">
+						<%=addNavItem(request, "Products", "/") %>
+						<%=addNavItem(request, "Order", "/Order") %>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<%					
+						//Sign up
+						final Principal user = request.getUserPrincipal();
+						String userLabel = "<span class='glyphicon glyphicon-user'></span> ";
+						if (null == user)
+						{
+							userLabel += "Sign Up";
+							%><%=addNavItem(request, userLabel,"/SignUp")%><%
+						}
+						else
+						{
+							userLabel += UserCache.getInstance().getUser(user.getName()).getForename();
+							%><%=addNavItem(request, userLabel,"/Account")%><%
+						}
+						
+						
+						//Login
+						if (null == user)
+						{
+							%><li><a href="#loginModal" data-toggle="modal"><span class='glyphicon glyphicon-log-in'></span> Login</a></li><%
+						}
+						else
+						{
+							//Logout
+							%><%=addNavItem(request, "<span class='glyphicon glyphicon-log-out'></span> Logout", "/Logout")%><%
+						}
+						%>
+						
+					</ul>
+				</div>
 		</header>
 		<div id="loginModal" class="modal fade" role="dialog">
 			<div class="modal-dialog">
